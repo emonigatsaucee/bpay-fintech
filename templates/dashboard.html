@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fintech Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
+        <h1 class="text-2xl font-bold mb-4">Welcome, {{ user.username }}</h1>
+        <h2 class="text-xl mb-2">Wallets</h2>
+        <ul>
+            {% for wallet in wallets %}
+            <li class="mb-2">
+                <span class="font-semibold">{{ wallet.currency }}</span>: {{ wallet.balance }}
+            </li>
+            {% empty %}
+            <li>No wallets found.</li>
+            {% endfor %}
+        </ul>
+        <h2 class="text-xl mt-6 mb-2">Recent Transactions</h2>
+        <ul>
+            {% for tx in transactions %}
+            <li class="mb-2">
+                {{ tx.type }} {{ tx.amount }} {{ tx.wallet.currency }} ({{ tx.created_at }})
+            </li>
+            {% empty %}
+            <li>No transactions found.</li>
+            {% endfor %}
+        </ul>
+        <a href="/admin/core/kycdocument/add/" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Upload KYC Document</a>
+    </div>
+</body>
+</html>
