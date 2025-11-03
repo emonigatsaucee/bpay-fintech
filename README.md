@@ -2,7 +2,7 @@
 
 A complete fintech solution supporting NGN, KES, and cryptocurrency wallets with integrated payment gateways, user-to-user transfers, currency conversion, and KYC compliance.
 
-## 🚀 Features
+## Features
 
 ### Core Functionality
 - **Multi-Currency Wallets**: NGN, KES, BTC, ETH support
@@ -22,7 +22,7 @@ A complete fintech solution supporting NGN, KES, and cryptocurrency wallets with
 - Mobile-responsive design
 - Intuitive wallet management
 
-## 🛠️ Developer Setup
+## Developer Setup
 
 ### First Time Setup
 ```powershell
@@ -64,7 +64,7 @@ npm start
 - **Backend API**: http://localhost:8000/api
 - **Admin Panel**: http://localhost:8000/admin
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/token/` - Login
@@ -86,7 +86,7 @@ npm start
 - `POST /api/kyc/` - Upload document
 - `POST /api/kyc/{id}/review/` - Admin review (staff only)
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 ```bash
@@ -107,7 +107,7 @@ DJANGO_SECRET_KEY=your_django_secret
 DJANGO_DEBUG=1
 ```
 
-## 💳 Payment Gateway Integration
+## Payment Gateway Integration
 
 ### Flutterwave (NGN)
 - Handles Nigerian Naira deposits and withdrawals
@@ -124,7 +124,7 @@ DJANGO_DEBUG=1
 - Support for BTC and ETH
 - Secure wallet address generation
 
-## 🎨 Frontend Features
+## Frontend Features
 
 ### Dashboard
 - Multi-currency balance overview
@@ -148,7 +148,7 @@ DJANGO_DEBUG=1
 - Status tracking
 - Admin review system
 
-## 🔒 Security Features
+## Security Features
 
 - JWT authentication
 - CORS protection
@@ -157,14 +157,14 @@ DJANGO_DEBUG=1
 - Secure file uploads
 - User data isolation
 
-## 📱 Mobile Responsive
+## Mobile Responsive
 
 The frontend is fully responsive and works seamlessly on:
 - Desktop browsers
 - Tablets
 - Mobile devices
 
-## 🚀 Production Deployment
+## Production Deployment
 
 ### Backend
 1. Set production environment variables
@@ -178,7 +178,7 @@ The frontend is fully responsive and works seamlessly on:
 2. Serve static files
 3. Configure API endpoints
 
-## 📞 Support
+## Support
 
 For technical support or questions about integration, please refer to the API documentation or contact the development team.
 
