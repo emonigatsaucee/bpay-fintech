@@ -14,3 +14,4 @@ django-redis==5.4.0
 redis==5.0.1
 sentry-sdk==1.38.0
 django-extensions==3.2.3
+setuptools==69.5.1
