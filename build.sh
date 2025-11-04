@@ -10,7 +10,7 @@ pip install -r requirements.txt
 # Build frontend
 cd frontend
 npm ci
-npm run build
+npx react-scripts build
 cd ..
 
 # Collect static files
