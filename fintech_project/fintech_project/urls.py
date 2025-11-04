@@ -9,15 +9,15 @@ import os
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
-    # Serve React app for all other routes
-    re_path(r'^.*$', TemplateView.as_view(template_name='index.html'), name='react_app'),
 ]
+
+# Serve static files (must come before catch-all)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Serve React static files in production
-if not settings.DEBUG:
-    urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-    ]
+# Catch-all for React app (must be last)
+urlpatterns += [
+    re_path(r'^.*$', TemplateView.as_view(template_name='index.html'), name='react_app'),
+]

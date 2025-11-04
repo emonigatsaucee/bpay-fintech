@@ -118,10 +118,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Serve React frontend static files
+# Include React build static files
 STATICFILES_DIRS = [
     BASE_DIR.parent / 'frontend' / 'build' / 'static',
-] if (BASE_DIR.parent / 'frontend' / 'build' / 'static').exists() else []
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
