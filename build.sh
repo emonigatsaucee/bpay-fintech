@@ -4,15 +4,15 @@
 set -o errexit  # exit on error
 
 # Install Python dependencies
+pip install --upgrade pip
 pip install -r requirements.txt
 
 # Build frontend
 cd frontend
-npm install
+npm ci
 npm run build
 cd ..
 
 # Collect static files
 cd fintech_project
 python manage.py collectstatic --no-input
-python manage.py migrate
