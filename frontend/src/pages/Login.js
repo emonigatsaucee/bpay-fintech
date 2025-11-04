@@ -46,15 +46,16 @@ const Login = () => {
 
     try {
       let endpoint, payload;
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
       
       if (mode === 'register') {
-        endpoint = 'http://localhost:8000/api/auth/register/';
+        endpoint = `${baseUrl}/api/auth/register/`;
         payload = { email: formData.email, password: formData.password, full_name: formData.full_name };
       } else if (mode === 'forgot') {
-        endpoint = 'http://localhost:8000/api/auth/forgot-password/';
+        endpoint = `${baseUrl}/api/auth/forgot-password/`;
         payload = { email: formData.email };
       } else {
-        endpoint = 'http://localhost:8000/api/auth/login-code/';
+        endpoint = `${baseUrl}/api/auth/login-code/`;
         payload = { email: formData.email, password: formData.password };
       }
       
@@ -88,15 +89,16 @@ const Login = () => {
 
     try {
       let endpoint, payload;
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
       
       if (mode === 'register') {
-        endpoint = 'http://localhost:8000/api/auth/verify-registration/';
+        endpoint = `${baseUrl}/api/auth/verify-registration/`;
         payload = { email: formData.email, code: verificationCode };
       } else if (mode === 'forgot') {
-        endpoint = 'http://localhost:8000/api/auth/reset-password/';
+        endpoint = `${baseUrl}/api/auth/reset-password/`;
         payload = { email: formData.email, code: verificationCode, new_password: formData.new_password };
       } else {
-        endpoint = 'http://localhost:8000/api/auth/verify-login/';
+        endpoint = `${baseUrl}/api/auth/verify-login/`;
         payload = { email: formData.email, code: verificationCode };
       }
       
@@ -141,15 +143,16 @@ const Login = () => {
     setResendLoading(true);
     try {
       let endpoint, payload;
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
       
       if (mode === 'register') {
-        endpoint = 'http://localhost:8000/api/auth/register/';
+        endpoint = `${baseUrl}/api/auth/register/`;
         payload = { email: formData.email, password: formData.password, full_name: formData.full_name };
       } else if (mode === 'forgot') {
-        endpoint = 'http://localhost:8000/api/auth/forgot-password/';
+        endpoint = `${baseUrl}/api/auth/forgot-password/`;
         payload = { email: formData.email };
       } else {
-        endpoint = 'http://localhost:8000/api/auth/login-code/';
+        endpoint = `${baseUrl}/api/auth/login-code/`;
         payload = { email: formData.email, password: formData.password };
       }
       
@@ -179,14 +182,9 @@ const Login = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
             <div className="w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <img 
-                src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
-                alt="BPAY" 
-                className="w-20 h-20 object-contain"
-                onError={(e) => {
-                  e.target.outerHTML = '<div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center"><span class="text-white font-bold text-3xl">BP</span></div>';
-                }}
-              />
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-3xl">BP</span>
+              </div>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
               The Future of <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">African</span> Payments
