@@ -59,7 +59,10 @@ ROOT_URLCONF = 'fintech_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR.parent / 'frontend' / 'build',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,13 +118,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Serve React frontend
+# Serve React frontend static files
 STATICFILES_DIRS = [
     BASE_DIR.parent / 'frontend' / 'build' / 'static',
-]
-
-# React build directory
-REACT_APP_DIR = BASE_DIR.parent / 'frontend' / 'build'
+] if (BASE_DIR.parent / 'frontend' / 'build' / 'static').exists() else []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
