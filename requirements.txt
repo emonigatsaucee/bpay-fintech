@@ -10,15 +10,7 @@ psycopg2-binary==2.9.9
 dj-database-url==2.1.0
 python-decouple==3.8
 python-dotenv==1.0.0
-
-# Production Security
-psycopg2-binary==2.9.9
-dj-database-url==2.1.0
 django-redis==5.4.0
 redis==5.0.1
-gunicorn==21.2.0
-whitenoise==6.6.0
-
-# Monitoring & Logging
 sentry-sdk==1.38.0
 django-extensions==3.2.3
