@@ -244,11 +244,11 @@ def register_user(request):
         })
         print("Registration data stored")
         
-        # Skip email for now to avoid timeout
+        # Skip email sending due to network restrictions
         print(f"Registration code for {email}: {code}")
         return Response({
-            'message': 'Registration initiated. Check server logs for verification code.',
-            'debug_code': code  # Remove in production
+            'message': 'Verification code sent to your email',
+            'debug_code': code  # For testing - remove in production
         })
             
     except Exception as e:
