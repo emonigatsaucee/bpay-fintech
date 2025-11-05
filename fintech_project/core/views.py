@@ -686,18 +686,23 @@ def payment_methods(request):
         return Response(data)
     
     elif request.method == 'POST':
-        method_type = request.data.get('type', '').upper()
-        name = request.data.get('name')
-        details = request.data.get('details')
-        
-        if not method_type:
-            return Response({'error': 'Type is required'}, status=400)
-        
         try:
+            print(f"Payment method POST data: {request.data}")
+            method_type = request.data.get('type', '').upper()
+            name = request.data.get('name')
+            details = request.data.get('details')
+            
+            print(f"Parsed data - type: {method_type}, name: {name}, details: {details}")
+            
+            if not method_type:
+                return Response({'error': 'Type is required'}, status=400)
+            
             if method_type == 'BANK_NG':
                 # Extract account number and bank name from details
                 account_number = details.split(' (')[0] if details else ''
                 bank_name = details.split(' (')[1].replace(')', '') if ' (' in details else ''
+                
+                print(f"Creating BANK_NG method - account: {account_number}, bank: {bank_name}")
                 
                 method = PaymentMethod.objects.create(
                     user=request.user,
@@ -706,6 +711,7 @@ def payment_methods(request):
                     bank_name=bank_name
                 )
             elif method_type == 'MPESA':
+                print(f"Creating MPESA method - number: {details}")
                 method = PaymentMethod.objects.create(
                     user=request.user,
                     method_type='MPESA',
@@ -730,6 +736,9 @@ def payment_methods(request):
                 'is_active': method.is_active
             }, status=201)
         except Exception as e:
+            print(f"Payment method creation error: {e}")
+            import traceback
+            traceback.print_exc()
             return Response({'error': f'Failed to create payment method: {str(e)}'}, status=500)
 
 @api_view(['GET'])
