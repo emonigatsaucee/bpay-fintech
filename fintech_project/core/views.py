@@ -184,11 +184,14 @@ def request_login_code(request):
             if EmailService.send_verification_code(email, code):
                 return Response({'message': 'Verification code sent to your email'})
             else:
-                return Response({'error': 'Failed to send email'}, status=500)
+                return Response({'error': 'Failed to send verification email'}, status=500)
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=400)
+    except Exception as e:
+        print(f"Login code error: {e}")
+        return Response({'error': 'Login failed'}, status=500)
 
 @api_view(['POST'])
 @permission_classes([])
@@ -239,8 +242,9 @@ def register_user(request):
         if EmailService.send_registration_code(email, code):
             return Response({'message': 'Verification code sent to your email'})
         else:
-            return Response({'error': 'Failed to send email'}, status=500)
+            return Response({'error': 'Failed to send verification email'}, status=500)
     except Exception as e:
+        print(f"Registration error: {e}")
         return Response({'error': 'Registration failed'}, status=500)
 
 @api_view(['POST'])
