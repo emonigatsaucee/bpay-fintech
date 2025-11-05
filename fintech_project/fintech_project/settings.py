@@ -45,11 +45,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Add WhiteNoise for static files on Render
+# Add WhiteNoise for static files
+INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
+MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 if not DEBUG:
-    INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
-    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_AUTOREFRESH = True
 
 ROOT_URLCONF = 'fintech_project.urls'
 
