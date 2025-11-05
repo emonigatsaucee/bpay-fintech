@@ -261,18 +261,24 @@ def register_user(request):
 @permission_classes([])
 def verify_registration(request):
     """Verify registration code and create account"""
-    email = request.data.get('email')
-    code = request.data.get('code')
-    
-    if not all([email, code]):
-        return Response({'error': 'Email and code required'}, status=400)
-    
     try:
+        email = request.data.get('email')
+        code = request.data.get('code')
+        
+        print(f"Verification attempt for: {email} with code: {code}")
+        
+        if not all([email, code]):
+            return Response({'error': 'Email and code required'}, status=400)
+        
         # Get stored registration data
         reg_data = EmailService.get_registration_data(email)
+        print(f"Retrieved reg_data: {reg_data}")
+        
         if not reg_data or reg_data['code'] != code:
+            print(f"Code mismatch: stored={reg_data['code'] if reg_data else None}, provided={code}")
             return Response({'error': 'Invalid or expired code'}, status=400)
         
+        print("Creating user...")
         # Create user
         user = User.objects.create_user(
             username=reg_data['email'],
@@ -281,12 +287,14 @@ def verify_registration(request):
             first_name=reg_data['full_name'].split(' ')[0],
             last_name=' '.join(reg_data['full_name'].split(' ')[1:]) if len(reg_data['full_name'].split(' ')) > 1 else ''
         )
+        print(f"User created: {user.email}")
         
         # Create profile
         UserProfile.objects.create(
             user=user,
             full_name=reg_data['full_name']
         )
+        print("Profile created")
         
         # Create default NGN wallet
         Wallet.objects.create(
@@ -294,13 +302,18 @@ def verify_registration(request):
             currency='NGN',
             balance=0
         )
+        print("Wallet created")
         
         # Clean up stored data
         EmailService.delete_registration_data(email)
+        print("Registration completed successfully")
         
         return Response({'message': 'Registration successful! You can now login.'})
     except Exception as e:
-        return Response({'error': 'Registration verification failed'}, status=500)
+        print(f"Registration verification error: {e}")
+        import traceback
+        traceback.print_exc()
+        return Response({'error': f'Registration verification failed: {str(e)}'}, status=500)
 
 @api_view(['POST'])
 @permission_classes([])
