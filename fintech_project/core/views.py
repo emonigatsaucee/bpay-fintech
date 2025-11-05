@@ -219,33 +219,43 @@ def verify_login_code(request):
 @permission_classes([])
 def register_user(request):
     """Send registration verification code"""
-    email = request.data.get('email')
-    password = request.data.get('password')
-    full_name = request.data.get('full_name')
-    
-    if not all([email, password, full_name]):
-        return Response({'error': 'Email, password, and full name required'}, status=400)
-    
-    if User.objects.filter(email=email).exists():
-        return Response({'error': 'Email already registered'}, status=400)
-    
     try:
+        email = request.data.get('email')
+        password = request.data.get('password')
+        full_name = request.data.get('full_name')
+        
+        print(f"Registration attempt for: {email}")
+        
+        if not all([email, password, full_name]):
+            return Response({'error': 'Email, password, and full name required'}, status=400)
+        
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'Email already registered'}, status=400)
+        
         # Store registration data temporarily
         code = EmailService.generate_code()
+        print(f"Generated code: {code}")
+        
         EmailService.store_registration_data(email, {
             'email': email,
             'password': password,
             'full_name': full_name,
             'code': code
         })
+        print("Registration data stored")
         
         if EmailService.send_registration_code(email, code):
+            print("Email sent successfully")
             return Response({'message': 'Verification code sent to your email'})
         else:
+            print("Email sending failed")
             return Response({'error': 'Failed to send verification email'}, status=500)
+            
     except Exception as e:
         print(f"Registration error: {e}")
-        return Response({'error': 'Registration failed'}, status=500)
+        import traceback
+        traceback.print_exc()
+        return Response({'error': f'Registration failed: {str(e)}'}, status=500)
 
 @api_view(['POST'])
 @permission_classes([])
