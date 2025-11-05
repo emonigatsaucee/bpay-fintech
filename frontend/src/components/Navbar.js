@@ -17,7 +17,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <img 
-              src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
+              src="/static/bpay-logo.jpg/5782897843587714011_120.jpg" 
               alt="BPAY" 
               className="w-12 h-12 object-contain group-hover:scale-105 transition-transform"
               onError={(e) => {
