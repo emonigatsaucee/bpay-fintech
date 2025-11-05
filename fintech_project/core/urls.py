@@ -17,6 +17,7 @@ urlpatterns = [
     path('auth/verify-registration/', views.verify_registration, name='verify_registration'),
     path('auth/forgot-password/', views.forgot_password, name='forgot_password'),
     path('auth/reset-password/', views.reset_password, name='reset_password'),
+    path('auth/google/', views.google_auth, name='google_auth'),
     path('wallets/convert/', views.convert_currency, name='convert_currency'),
     path('crypto/deposit/', views.crypto_deposit, name='crypto_deposit'),
     path('crypto/withdraw/', views.crypto_withdraw, name='crypto_withdraw'),

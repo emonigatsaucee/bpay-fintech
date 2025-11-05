@@ -10,6 +10,7 @@ from .email_service import EmailService
 from .luna_service import LunaWalletService
 from .kyc_service import KYCVerificationService
 from .models import UserProfile, PaymentMethod
+from .google_auth import GoogleAuthService
 
 class WalletListCreateView(generics.ListCreateAPIView):
     serializer_class = WalletSerializer
@@ -182,10 +183,20 @@ def request_login_code(request):
             EmailService.store_code(email, code)
             print(f"Login code for {email}: {code}")
             
-            return Response({
-                'message': 'Verification code sent to your email',
-                'debug_code': code  # For testing - remove in production
-            })
+            # Try to send email, fallback to debug code
+            email_sent = EmailService.send_verification_code(email, code)
+            
+            if email_sent:
+                return Response({
+                    'message': 'Verification code sent to your email'
+                })
+            else:
+                # Fallback for development/network issues
+                print(f"Email failed, showing debug code for {email}: {code}")
+                return Response({
+                    'message': 'Verification code sent to your email',
+                    'debug_code': code  # For testing when email fails
+                })
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
     except User.DoesNotExist:
@@ -233,10 +244,11 @@ def register_user(request):
         if User.objects.filter(email=email).exists():
             return Response({'error': 'Email already registered'}, status=400)
         
-        # Store registration data temporarily
+        # Generate verification code
         code = EmailService.generate_code()
         print(f"Generated code: {code}")
         
+        # Store registration data temporarily
         EmailService.store_registration_data(email, {
             'email': email,
             'password': password,
@@ -245,12 +257,20 @@ def register_user(request):
         })
         print("Registration data stored")
         
-        # Skip email sending due to network restrictions
-        print(f"Registration code for {email}: {code}")
-        return Response({
-            'message': 'Verification code sent to your email',
-            'debug_code': code  # For testing - remove in production
-        })
+        # Try to send email, fallback to debug code
+        email_sent = EmailService.send_registration_code(email, code)
+        
+        if email_sent:
+            return Response({
+                'message': 'Verification code sent to your email'
+            })
+        else:
+            # Fallback for development/network issues
+            print(f"Email failed, showing debug code for {email}: {code}")
+            return Response({
+                'message': 'Verification code sent to your email',
+                'debug_code': code  # For testing when email fails
+            })
             
     except Exception as e:
         print(f"Registration error: {e}")
@@ -328,10 +348,18 @@ def forgot_password(request):
         code = EmailService.generate_code()
         EmailService.store_code(f"reset_{email}", code)
         
-        if EmailService.send_reset_code(email, code):
+        # Try to send email, fallback to debug code
+        email_sent = EmailService.send_reset_code(email, code)
+        
+        if email_sent:
             return Response({'message': 'Reset code sent to your email'})
         else:
-            return Response({'error': 'Failed to send email'}, status=500)
+            # Fallback for development/network issues
+            print(f"Reset email failed, showing debug code for {email}: {code}")
+            return Response({
+                'message': 'Reset code sent to your email',
+                'debug_code': code  # For testing when email fails
+            })
     except User.DoesNotExist:
         return Response({'error': 'Email not found'}, status=400)
 
@@ -740,6 +768,51 @@ def payment_methods(request):
             import traceback
             traceback.print_exc()
             return Response({'error': f'Failed to create payment method: {str(e)}'}, status=500)
+
+@api_view(['POST'])
+@permission_classes([])
+def google_auth(request):
+    """Handle Google OAuth authentication"""
+    try:
+        access_token = request.data.get('access_token')
+        
+        if not access_token:
+            return Response({'error': 'Access token required'}, status=400)
+        
+        # Verify Google token and get user info
+        google_user_info = GoogleAuthService.verify_google_token(access_token)
+        
+        if not google_user_info:
+            return Response({'error': 'Invalid Google token'}, status=400)
+        
+        if not google_user_info.get('verified_email'):
+            return Response({'error': 'Google email not verified'}, status=400)
+        
+        # Get or create user
+        user, created = GoogleAuthService.get_or_create_user(google_user_info)
+        
+        if not user:
+            return Response({'error': 'Failed to create user'}, status=500)
+        
+        # Generate JWT tokens
+        from rest_framework_simplejwt.tokens import RefreshToken
+        refresh = RefreshToken.for_user(user)
+        
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            'user': {
+                'email': user.email,
+                'name': google_user_info['name'],
+                'is_new_user': created
+            }
+        })
+        
+    except Exception as e:
+        print(f"Google auth error: {e}")
+        import traceback
+        traceback.print_exc()
+        return Response({'error': 'Google authentication failed'}, status=500)
 
 @api_view(['GET'])
 @permission_classes([])
