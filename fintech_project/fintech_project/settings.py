@@ -31,15 +31,6 @@ INSTALLED_APPS = [
     'core',
 ]
 
-# Add WhiteNoise for static files on Render
-if not DEBUG:
-    try:
-        INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
-        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    except:
-        pass  # WhiteNoise not installed in development
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +44,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Add WhiteNoise for static files on Render
+if not DEBUG:
+    try:
+        INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
+        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    except:
+        pass  # WhiteNoise not installed in development
 
 ROOT_URLCONF = 'fintech_project.urls'
 
@@ -158,8 +158,23 @@ if DEBUG:
         "http://127.0.0.1:3000",
     ]
 else:
+    # Allow same-origin requests (frontend served by Django)
+    CORS_ALLOW_ALL_ORIGINS = False
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('FRONTEND_URL', 'https://yourdomain.com'),
+    ]
+    # Also allow same-origin requests
+    CORS_ALLOW_CREDENTIALS = True
+    CORS_ALLOW_HEADERS = [
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
     ]
 
 CORS_ALLOW_CREDENTIALS = True
