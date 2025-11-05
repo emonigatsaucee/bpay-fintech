@@ -45,16 +45,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Add WhiteNoise for static files on Render
+# Add WhiteNoise for static files
 try:
     import whitenoise
     INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    if not DEBUG:
-        STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-        WHITENOISE_USE_FINDERS = True
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_AUTOREFRESH = True
 except ImportError:
-    # WhiteNoise not available in development
     pass
 
 ROOT_URLCONF = 'fintech_project.urls'
@@ -122,12 +121,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Include React build static files
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR.parent / 'frontend' / 'build' / 'static',
-    ]
-else:
-    STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    BASE_DIR.parent / 'frontend' / 'build' / 'static',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
