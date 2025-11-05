@@ -18,7 +18,7 @@ if settings.DEBUG:
 else:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Catch-all for React app (must be last)
+# Catch-all for React app (must be last, exclude static and media)
 urlpatterns += [
-    re_path(r'^.*$', TemplateView.as_view(template_name='index.html'), name='react_app'),
+    re_path(r'^(?!static/)(?!media/).*$', TemplateView.as_view(template_name='index.html'), name='react_app'),
 ]
