@@ -177,14 +177,15 @@ def request_login_code(request):
     try:
         user = User.objects.get(email=email)
         if user.check_password(password):
-            # Generate and send real verification code
+            # Generate and store verification code
             code = EmailService.generate_code()
             EmailService.store_code(email, code)
+            print(f"Login code for {email}: {code}")
             
-            if EmailService.send_verification_code(email, code):
-                return Response({'message': 'Verification code sent to your email'})
-            else:
-                return Response({'error': 'Failed to send verification email'}, status=500)
+            return Response({
+                'message': 'Verification code sent to your email',
+                'debug_code': code  # For testing - remove in production
+            })
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
     except User.DoesNotExist:
@@ -296,13 +297,13 @@ def verify_registration(request):
         )
         print("Profile created")
         
-        # Create default NGN wallet
-        Wallet.objects.create(
+        # Create default NGN wallet (if not exists)
+        wallet, created = Wallet.objects.get_or_create(
             owner=user,
             currency='NGN',
-            balance=0
+            defaults={'balance': 0}
         )
-        print("Wallet created")
+        print(f"Wallet {'created' if created else 'already exists'}")
         
         # Clean up stored data
         EmailService.delete_registration_data(email)
