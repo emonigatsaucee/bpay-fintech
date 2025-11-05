@@ -22,6 +22,6 @@ if frontend_build.exists():
     
     # Copy new files
     shutil.copytree(frontend_build, django_static, dirs_exist_ok=True)
-    print("✅ Static files copied successfully")
+    print("Static files copied successfully")
 else:
-    print("❌ Frontend build directory not found. Run 'npm run build' first.")
+    print("Frontend build directory not found. Run 'npm run build' first.")
