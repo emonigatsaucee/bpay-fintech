@@ -17,7 +17,7 @@ const Wallets = () => {
 
   const fetchWallets = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/wallets/');
+      const response = await axios.get('${API_BASE_URL}/wallets/');
       setWallets(response.data);
     } catch (error) {
       toast.error('Failed to fetch wallets');
@@ -28,7 +28,7 @@ const Wallets = () => {
 
   const createWallet = async (currency) => {
     try {
-      await axios.post('http://localhost:8000/api/wallets/', { currency });
+      await axios.post('${API_BASE_URL}/wallets/', { currency });
       toast.success(`${currency} wallet created successfully`);
       fetchWallets();
     } catch (error) {
@@ -38,7 +38,7 @@ const Wallets = () => {
 
   const handleTransfer = async (formData) => {
     try {
-      await axios.post(`http://localhost:8000/api/wallets/${selectedWallet.id}/transfer/`, formData);
+      await axios.post(`${API_BASE_URL}/wallets/${selectedWallet.id}/transfer/`, formData);
       toast.success('Transfer successful');
       setShowTransferModal(false);
       fetchWallets();
@@ -49,7 +49,7 @@ const Wallets = () => {
 
   const handleDeposit = async (formData) => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/wallets/${selectedWallet.id}/deposit/`, formData);
+      const response = await axios.post(`${API_BASE_URL}/wallets/${selectedWallet.id}/deposit/`, formData);
       
       if (response.data.payment_url) {
         window.open(response.data.payment_url, '_blank');
@@ -65,7 +65,7 @@ const Wallets = () => {
 
   const handleWithdraw = async (formData) => {
     try {
-      await axios.post(`http://localhost:8000/api/wallets/${selectedWallet.id}/withdraw/`, formData);
+      await axios.post(`${API_BASE_URL}/wallets/${selectedWallet.id}/withdraw/`, formData);
       toast.success('Withdrawal initiated');
       setShowWithdrawModal(false);
       fetchWallets();
@@ -76,7 +76,7 @@ const Wallets = () => {
 
   const handleConvert = async (formData) => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/wallets/${selectedWallet.id}/convert/`, formData);
+      const response = await axios.post(`${API_BASE_URL}/wallets/${selectedWallet.id}/convert/`, formData);
       toast.success(`Converted to ${response.data.converted_amount} ${formData.to_currency}`);
       setShowConvertModal(false);
       fetchWallets();

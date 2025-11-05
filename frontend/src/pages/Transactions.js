@@ -17,7 +17,7 @@ const Transactions = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
       
-      const response = await axios.get('http://localhost:8000/api/transactions/', config);
+      const response = await axios.get('${API_BASE_URL}/transactions/', config);
       setTransactions(response.data);
     } catch (error) {
       if (error.response?.status === 401) {

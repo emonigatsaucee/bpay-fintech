@@ -18,7 +18,7 @@ const KYC = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
       
-      const response = await axios.get('http://localhost:8000/api/kyc/', config);
+      const response = await axios.get('${API_BASE_URL}/kyc/', config);
       setDocuments(response.data);
     } catch (error) {
       if (error.response?.status === 401) {
@@ -35,7 +35,7 @@ const KYC = () => {
   const handleUpload = async (formData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8000/api/kyc/', formData, {
+      await axios.post('${API_BASE_URL}/kyc/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`

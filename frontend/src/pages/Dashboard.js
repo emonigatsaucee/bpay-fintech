@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../services/api';
 
 const Dashboard = () => {
   const [accounts, setAccounts] = useState([]);
@@ -25,8 +26,8 @@ const Dashboard = () => {
       };
       
       const [walletsRes, transactionsRes] = await Promise.all([
-        axios.get('http://localhost:8000/api/wallets/', config),
-        axios.get('http://localhost:8000/api/transactions/', config)
+        axios.get(`${API_BASE_URL}/wallets/`, config),
+        axios.get(`${API_BASE_URL}/transactions/`, config)
       ]);
       
       setAccounts(walletsRes.data);
@@ -51,10 +52,10 @@ const Dashboard = () => {
       };
       
       // Update rates first
-      await axios.post('http://localhost:8000/api/rates/update/', {}, config);
+      await axios.post(`${API_BASE_URL}/rates/update/`, {}, config);
       
       // Then fetch current rates
-      const ratesRes = await axios.get('http://localhost:8000/api/rates/', config);
+      const ratesRes = await axios.get(`${API_BASE_URL}/rates/`, config);
       setRates(ratesRes.data);
     } catch (error) {
       if (error.response?.status === 401) {
@@ -74,7 +75,7 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
       
-      await axios.post('http://localhost:8000/api/wallets/crypto/create/', 
+      await axios.post(`${API_BASE_URL}/wallets/crypto/create/`, 
         { currency }, 
         config
       );
@@ -420,7 +421,7 @@ const DepositModal = ({ account, onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8000/api/crypto/deposit/', {
+      await axios.post(`${API_BASE_URL}/crypto/deposit/`, {
         currency: account.currency,
         tx_hash: txHash,
         amount: parseFloat(amount)
@@ -655,7 +656,7 @@ const WithdrawModal = ({ account, onClose }) => {
   const fetchPaymentMethods = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8000/api/payment-methods/', {
+      const response = await axios.get(`${API_BASE_URL}/payment-methods/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -821,7 +822,7 @@ const ConvertModal = ({ account, onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8000/api/wallets/convert/', {
+      const response = await axios.post('${API_BASE_URL}/wallets/convert/', {
         from_currency: account.currency,
         to_currency: toCurrency,
         amount: parseFloat(amount)
@@ -913,7 +914,7 @@ const ExchangeModal = ({ account, onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8000/api/wallets/convert/', {
+      const response = await axios.post('${API_BASE_URL}/wallets/convert/', {
         from_currency: account.currency,
         to_currency: toFiat,
         amount: parseFloat(amount)
