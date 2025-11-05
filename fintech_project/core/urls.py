@@ -25,4 +25,5 @@ urlpatterns = [
     path('user/profile/', views.user_profile, name='user_profile'),
     path('user/profile/update/', views.update_user_profile, name='update_user_profile'),
     path('payment-methods/', views.payment_methods, name='payment_methods'),
+    path('test/', views.test_endpoint, name='test'),
 ]

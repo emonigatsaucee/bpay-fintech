@@ -717,3 +717,9 @@ def payment_methods(request):
             }, status=201)
         except Exception as e:
             return Response({'error': f'Failed to create payment method: {str(e)}'}, status=500)
+
+@api_view(['GET'])
+@permission_classes([])
+def test_endpoint(request):
+    """Simple test endpoint"""
+    return Response({'message': 'Server is working'})
