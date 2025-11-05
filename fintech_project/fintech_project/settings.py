@@ -47,12 +47,9 @@ MIDDLEWARE = [
 
 # Add WhiteNoise for static files on Render
 if not DEBUG:
-    try:
-        INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
-        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    except:
-        pass  # WhiteNoise not installed in development
+    INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'fintech_project.urls'
 
@@ -119,13 +116,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Include React build static files
-STATICFILES_DIRS = [
-    BASE_DIR.parent / 'frontend' / 'build' / 'static',
-]
-
-# Production static files configuration
-if not DEBUG:
-    # WhiteNoise will serve from STATIC_ROOT
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR.parent / 'frontend' / 'build' / 'static',
+    ]
+else:
     STATICFILES_DIRS = []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
