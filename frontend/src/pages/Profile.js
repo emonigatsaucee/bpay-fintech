@@ -18,9 +18,9 @@ const Profile = () => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
       const [kycRes, userRes, paymentRes] = await Promise.all([
-        axios.get('${API_BASE_URL}/kyc/', config),
-        axios.get('${API_BASE_URL}/user/profile/', config).catch(() => ({ data: {} })),
-        axios.get('${API_BASE_URL}/payment-methods/', config).catch(() => ({ data: [] }))
+        axios.get(`${API_BASE_URL}/kyc/`, config),
+        axios.get(`${API_BASE_URL}/user/profile/`, config).catch(() => ({ data: {} })),
+        axios.get(`${API_BASE_URL}/payment-methods/`, config).catch(() => ({ data: [] }))
       ]);
       
       setUser(userRes.data);
@@ -132,7 +132,7 @@ const ProfileTab = ({ user, setUser }) => {
   const updateProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put('${API_BASE_URL}/user/profile/update/', {
+      await axios.put(`${API_BASE_URL}/user/profile/update/`, {
         full_name: user?.full_name
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -234,7 +234,7 @@ const KYCTab = ({ kycStatus, onUpdate }) => {
 
       const token = localStorage.getItem('token');
 
-      const response = await axios.post('${API_BASE_URL}/kyc/', formData, {
+      const response = await axios.post(`${API_BASE_URL}/kyc/`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -400,7 +400,7 @@ const PaymentMethodsTab = ({ methods, onUpdate }) => {
   const addPaymentMethod = async (methodData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('${API_BASE_URL}/payment-methods/', methodData, {
+      await axios.post(`${API_BASE_URL}/payment-methods/`, methodData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowAddMethod(false);

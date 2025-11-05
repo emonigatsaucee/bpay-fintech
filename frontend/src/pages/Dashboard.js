@@ -822,7 +822,7 @@ const ConvertModal = ({ account, onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('${API_BASE_URL}/wallets/convert/', {
+      const response = await axios.post(`${API_BASE_URL}/wallets/convert/`, {
         from_currency: account.currency,
         to_currency: toCurrency,
         amount: parseFloat(amount)
@@ -914,7 +914,7 @@ const ExchangeModal = ({ account, onClose }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('${API_BASE_URL}/wallets/convert/', {
+      const response = await axios.post(`${API_BASE_URL}/wallets/convert/`, {
         from_currency: account.currency,
         to_currency: toFiat,
         amount: parseFloat(amount)
