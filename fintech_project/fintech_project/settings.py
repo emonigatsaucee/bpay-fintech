@@ -48,8 +48,8 @@ MIDDLEWARE = [
 # Add WhiteNoise for static files on Render
 if not DEBUG:
     INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 ROOT_URLCONF = 'fintech_project.urls'
 

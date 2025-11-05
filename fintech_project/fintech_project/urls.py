@@ -11,16 +11,12 @@ urlpatterns = [
     path('api/', include('core.urls')),
 ]
 
-# Serve static and media files
+# Serve media files
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
-    # In production, serve static files through Django for Render
-    urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-    ]
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch-all for React app (must be last)
 urlpatterns += [
