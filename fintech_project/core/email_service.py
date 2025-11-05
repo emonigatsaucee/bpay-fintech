@@ -6,10 +6,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.core.cache import cache
 from django.conf import settings
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 class EmailService:
     @staticmethod
@@ -24,8 +20,8 @@ class EmailService:
             # Gmail SMTP configuration
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
-            sender_email = os.getenv('EMAIL_HOST_USER')
-            sender_password = os.getenv('EMAIL_HOST_PASSWORD')
+            sender_email = settings.EMAIL_HOST_USER
+            sender_password = settings.EMAIL_HOST_PASSWORD
             
             if not sender_email or not sender_password:
                 print(f"Email credentials missing: email={sender_email}, password={'*' * len(sender_password) if sender_password else None}")
@@ -153,8 +149,8 @@ class EmailService:
         try:
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
-            sender_email = os.getenv('EMAIL_HOST_USER')
-            sender_password = os.getenv('EMAIL_HOST_PASSWORD')
+            sender_email = settings.EMAIL_HOST_USER
+            sender_password = settings.EMAIL_HOST_PASSWORD
             
             if not sender_email or not sender_password:
                 return False
@@ -222,8 +218,8 @@ class EmailService:
         try:
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
-            sender_email = os.getenv('EMAIL_HOST_USER')
-            sender_password = os.getenv('EMAIL_HOST_PASSWORD')
+            sender_email = settings.EMAIL_HOST_USER
+            sender_password = settings.EMAIL_HOST_PASSWORD
             
             if not sender_email or not sender_password:
                 return False
