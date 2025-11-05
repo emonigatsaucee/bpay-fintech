@@ -123,6 +123,11 @@ STATICFILES_DIRS = [
     BASE_DIR.parent / 'frontend' / 'build' / 'static',
 ]
 
+# Production static files configuration
+if not DEBUG:
+    # WhiteNoise will serve from STATIC_ROOT
+    STATICFILES_DIRS = []
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {

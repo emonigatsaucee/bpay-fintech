@@ -1,13 +1,17 @@
-#!/usr/bin/env bash
-# exit on error
-set -o errexit
+#!/bin/bash
+set -e
 
-# Install Python dependencies
-pip install -r requirements.txt
+echo "🔨 Building frontend..."
+cd frontend
+npm ci
+npm run build
+cd ..
 
-# Collect static files
+echo "📦 Copying static files..."
+python copy_static.py
+
+echo "🗃️ Collecting Django static files..."
 cd fintech_project
-python manage.py collectstatic --no-input
+python manage.py collectstatic --noinput
 
-# Run migrations
-python manage.py migrate
+echo "✅ Build complete!"
