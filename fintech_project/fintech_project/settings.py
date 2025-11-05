@@ -121,9 +121,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Include React build static files
-STATICFILES_DIRS = [
-    BASE_DIR.parent / 'frontend' / 'build' / 'static',
-]
+STATICFILES_DIRS = []
+if (BASE_DIR.parent / 'frontend' / 'build' / 'static').exists():
+    STATICFILES_DIRS.append(BASE_DIR.parent / 'frontend' / 'build' / 'static')
+if (BASE_DIR / 'static').exists():
+    STATICFILES_DIRS.append(BASE_DIR / 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
