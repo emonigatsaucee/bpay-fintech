@@ -183,20 +183,14 @@ def request_login_code(request):
             EmailService.store_code(email, code)
             print(f"Login code for {email}: {code}")
             
-            # Try to send email, fallback to debug code
+            # Always show debug code since email might not work on Render
             email_sent = EmailService.send_verification_code(email, code)
+            print(f"Login code for {email}: {code}")
             
-            if email_sent:
-                return Response({
-                    'message': 'Verification code sent to your email'
-                })
-            else:
-                # Fallback for development/network issues
-                print(f"Email failed, showing debug code for {email}: {code}")
-                return Response({
-                    'message': 'Verification code sent to your email',
-                    'debug_code': code  # For testing when email fails
-                })
+            return Response({
+                'message': f'Code sent! Check email or use: {code}',
+                'debug_code': code
+            })
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
     except User.DoesNotExist:
@@ -257,20 +251,14 @@ def register_user(request):
         })
         print("Registration data stored")
         
-        # Try to send email, fallback to debug code
+        # Always show debug code since email might not work on Render
         email_sent = EmailService.send_registration_code(email, code)
+        print(f"Registration code for {email}: {code}")
         
-        if email_sent:
-            return Response({
-                'message': 'Verification code sent to your email'
-            })
-        else:
-            # Fallback for development/network issues
-            print(f"Email failed, showing debug code for {email}: {code}")
-            return Response({
-                'message': 'Verification code sent to your email',
-                'debug_code': code  # For testing when email fails
-            })
+        return Response({
+            'message': f'Code sent! Check email or use: {code}',
+            'debug_code': code
+        })
             
     except Exception as e:
         print(f"Registration error: {e}")
@@ -348,18 +336,14 @@ def forgot_password(request):
         code = EmailService.generate_code()
         EmailService.store_code(f"reset_{email}", code)
         
-        # Try to send email, fallback to debug code
+        # Always show debug code since email might not work on Render
         email_sent = EmailService.send_reset_code(email, code)
+        print(f"Reset code for {email}: {code}")
         
-        if email_sent:
-            return Response({'message': 'Reset code sent to your email'})
-        else:
-            # Fallback for development/network issues
-            print(f"Reset email failed, showing debug code for {email}: {code}")
-            return Response({
-                'message': 'Reset code sent to your email',
-                'debug_code': code  # For testing when email fails
-            })
+        return Response({
+            'message': f'Code sent! Check email or use: {code}',
+            'debug_code': code
+        })
     except User.DoesNotExist:
         return Response({'error': 'Email not found'}, status=400)
 

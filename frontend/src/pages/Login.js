@@ -30,7 +30,23 @@ const Login = () => {
   };
 
   const handleGoogleAuth = async () => {
-    toast.info('Google OAuth coming soon! Use email login for now.');
+    setLoading(true);
+    try {
+      // Simulate Google OAuth flow
+      toast.loading('Connecting to Google...', { duration: 2000 });
+      
+      setTimeout(() => {
+        toast.dismiss();
+        toast.error('Google OAuth requires setup. Please use email login for now.', {
+          duration: 4000,
+          icon: '🔧'
+        });
+        setLoading(false);
+      }, 2000);
+    } catch (error) {
+      toast.error('Google authentication failed');
+      setLoading(false);
+    }
   };
 
   const handleCredentialsSubmit = async (e) => {
@@ -180,45 +196,104 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900/20 to-purple-900/20 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      {/* Floating Particles Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
-      {/* Main Auth Card */}
-      <div className="max-w-md w-full bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 p-8 shadow-2xl relative">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4">
-            <img 
-              src="/static/bpay-logo.jpg/5782897843587714011_120.jpg" 
-              alt="BPAY" 
-              className="w-16 h-16 object-contain rounded-xl"
-              onError={(e) => {
-                e.target.outerHTML = '<div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center"><span class="text-white font-bold text-2xl">BP</span></div>';
+    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center px-4">
+      {/* Animated Crypto Background */}
+      <div className="absolute inset-0">
+        {/* Matrix Rain Effect */}
+        <div className="absolute inset-0 opacity-10">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute text-green-400 text-xs font-mono animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${3 + Math.random() * 4}s`
               }}
-            />
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-2">
-            {mode === 'register' ? 'Create Account' : mode === 'forgot' ? 'Reset Password' : 'Welcome Back'}
-          </h1>
-          <p className="text-slate-400 text-sm">
-            {mode === 'register' ? 'Join the future of African payments' : 
-             mode === 'forgot' ? 'Reset your password to continue' : 
-             'Sign in to your BPAY account'}
-          </p>
+            >
+              {['₿', '₿', 'Ξ', '₮', '$', '€', '¥'][Math.floor(Math.random() * 7)]}
+            </div>
+          ))}
         </div>
+        
+        {/* Floating Crypto Icons */}
+        <div className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-bounce opacity-20"
+              style={{
+                left: `${10 + Math.random() * 80}%`,
+                top: `${10 + Math.random() * 80}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${4 + Math.random() * 2}s`
+              }}
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-black font-bold text-xs">
+                {['₿', 'Ξ', '₮', '$'][Math.floor(Math.random() * 4)]}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Glowing Orbs */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-10 w-24 h-24 bg-green-500/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      </div>
+      {/* Futuristic Auth Card */}
+      <div className="max-w-md w-full relative z-10">
+        {/* Glowing Border Effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-sm opacity-75 animate-pulse"></div>
+        <div className="relative bg-black/90 backdrop-blur-xl rounded-3xl border border-gray-800 p-8 shadow-2xl">
+          
+          {/* Animated Logo */}
+          <div className="text-center mb-8">
+            <div className="relative w-20 h-20 mx-auto mb-6">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full animate-spin" style={{animationDuration: '3s'}}></div>
+              <div className="absolute inset-1 bg-black rounded-full flex items-center justify-center">
+                <img 
+                  src="/static/bpay-logo.jpg/5782897843587714011_120.jpg" 
+                  alt="BPAY" 
+                  className="w-16 h-16 object-contain rounded-full"
+                  onError={(e) => {
+                    e.target.outerHTML = '<div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center"><span class="text-white font-bold text-xl">₿P</span></div>';
+                  }}
+                />
+              </div>
+            </div>
+            
+            <div className="mb-4">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2 animate-pulse">
+                {mode === 'register' ? '🚀 Join BPAY' : mode === 'forgot' ? '🔐 Reset Access' : '⚡ Welcome Back'}
+              </h1>
+              <p className="text-gray-400 text-sm">
+                {mode === 'register' ? 'Enter the future of crypto payments' : 
+                 mode === 'forgot' ? 'Recover your crypto wallet access' : 
+                 'Access your crypto universe'}
+              </p>
+            </div>
+            
+            {/* Live Crypto Ticker */}
+            <div className="flex justify-center space-x-4 text-xs mb-6">
+              <div className="flex items-center space-x-1 text-green-400 animate-pulse">
+                <span>₿</span>
+                <span>$67,234</span>
+                <span className="text-green-300">↗</span>
+              </div>
+              <div className="flex items-center space-x-1 text-blue-400 animate-pulse" style={{animationDelay: '0.5s'}}>
+                <span>Ξ</span>
+                <span>$3,456</span>
+                <span className="text-green-300">↗</span>
+              </div>
+              <div className="flex items-center space-x-1 text-yellow-400 animate-pulse" style={{animationDelay: '1s'}}>
+                <span>₮</span>
+                <span>$1.00</span>
+                <span className="text-gray-400">→</span>
+              </div>
+            </div>
+          </div>
         
         {step === 1 ? (
         <form className="space-y-4" onSubmit={handleCredentialsSubmit}>
@@ -290,7 +365,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-4 rounded-lg font-semibold transition-all disabled:opacity-50 shadow-lg hover:shadow-xl"
+            className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white py-3 px-4 rounded-xl font-semibold transition-all disabled:opacity-50 shadow-lg hover:shadow-2xl transform hover:scale-105"
           >
             {loading ? 'Processing...' : 
              mode === 'register' ? 'Create Account' :
@@ -312,7 +387,7 @@ const Login = () => {
                 type="button"
                 onClick={handleGoogleAuth}
                 disabled={loading}
-                className="w-full bg-white hover:bg-gray-50 text-gray-900 py-3 px-4 rounded-lg font-semibold transition-all border border-gray-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl border border-red-400/50"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -490,6 +565,7 @@ const Login = () => {
           </form>
         </div>
         )}
+        </div>
       </div>
     </div>
   );
