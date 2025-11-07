@@ -76,6 +76,23 @@ const Login = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+          }
+          @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+          }
+        `}
+      </style>
+
       {/* Animated Background Elements */}
       <div style={{
         position: 'absolute',
@@ -107,23 +124,7 @@ const Login = () => {
         borderRadius: '50%',
         animation: 'float 7s ease-in-out infinite'
       }}></div>
-      
-      <style>
-        {`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-          }
-          @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-          }
-        `}
-      </style>
+
       <div style={{
         display: 'flex',
         gap: '2rem',
@@ -131,85 +132,88 @@ const Login = () => {
         maxWidth: '1200px',
         alignItems: 'center',
         position: 'relative',
-        zIndex: 10
+        zIndex: 10,
+        flexWrap: 'wrap'
       }}>
         {/* Features Section */}
-        <div style={{
-          flex: 1,
-          display: showFeatures ? 'block' : 'none',
-          animation: showFeatures ? 'slideIn 1s ease-out' : 'none'
-        }}>
+        {showFeatures && (
           <div style={{
-            backgroundColor: 'rgba(30, 41, 59, 0.8)',
-            borderRadius: '20px',
-            padding: '2rem',
-            border: '1px solid rgba(51, 65, 85, 0.5)',
-            backdropFilter: 'blur(10px)'
+            flex: 1,
+            minWidth: '300px',
+            animation: 'slideIn 1s ease-out'
           }}>
-            <h2 style={{
-              fontSize: '2.5rem',
-              fontWeight: 'bold',
-              color: 'white',
-              marginBottom: '1rem',
-              background: 'linear-gradient(135deg, #60a5fa, #a78bfa)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              Welcome to BPAY
-            </h2>
-            <p style={{ color: '#94a3b8', marginBottom: '2rem', fontSize: '1.1rem' }}>
-              The most advanced multi-currency wallet system
-            </p>
-            
-            {/* Rotating Features */}
-            <div style={{ minHeight: '120px' }}>
-              {features.map((feature, index) => (
-                <div key={index} style={{
-                  display: currentFeature === index ? 'block' : 'none',
-                  animation: currentFeature === index ? 'slideIn 0.5s ease-out' : 'none'
-                }}>
-                  <div style={{
-                    backgroundColor: 'rgba(51, 65, 85, 0.5)',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    border: '1px solid rgba(71, 85, 105, 0.5)'
-                  }}>
-                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{feature.icon}</div>
-                    <h3 style={{ color: 'white', fontSize: '1.2rem', marginBottom: '0.5rem' }}>
-                      {feature.title}
-                    </h3>
-                    <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{feature.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* System Stats */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1rem',
-              marginTop: '2rem'
+              backgroundColor: 'rgba(30, 41, 59, 0.8)',
+              borderRadius: '20px',
+              padding: '2rem',
+              border: '1px solid rgba(51, 65, 85, 0.5)',
+              backdropFilter: 'blur(10px)'
             }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>4</div>
-                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Currencies</div>
+              <h2 style={{
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                color: 'white',
+                marginBottom: '1rem',
+                background: 'linear-gradient(135deg, #60a5fa, #a78bfa)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                Welcome to BPAY
+              </h2>
+              <p style={{ color: '#94a3b8', marginBottom: '2rem', fontSize: '1.1rem' }}>
+                The most advanced multi-currency wallet system
+              </p>
+              
+              {/* Rotating Features */}
+              <div style={{ minHeight: '120px' }}>
+                {features.map((feature, index) => (
+                  <div key={index} style={{
+                    display: currentFeature === index ? 'block' : 'none',
+                    animation: currentFeature === index ? 'slideIn 0.5s ease-out' : 'none'
+                  }}>
+                    <div style={{
+                      backgroundColor: 'rgba(51, 65, 85, 0.5)',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      border: '1px solid rgba(71, 85, 105, 0.5)'
+                    }}>
+                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{feature.icon}</div>
+                      <h3 style={{ color: 'white', fontSize: '1.2rem', marginBottom: '0.5rem' }}>
+                        {feature.title}
+                      </h3>
+                      <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ color: '#3b82f6', fontSize: '1.5rem', fontWeight: 'bold' }}>24/7</div>
-                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Support</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ color: '#f59e0b', fontSize: '1.5rem', fontWeight: 'bold' }}>2</div>
-                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Gateways</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ color: '#8b5cf6', fontSize: '1.5rem', fontWeight: 'bold' }}>100%</div>
-                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Secure</div>
+              
+              {/* System Stats */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '1rem',
+                marginTop: '2rem'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>4</div>
+                  <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Currencies</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ color: '#3b82f6', fontSize: '1.5rem', fontWeight: 'bold' }}>24/7</div>
+                  <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Support</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ color: '#f59e0b', fontSize: '1.5rem', fontWeight: 'bold' }}>2</div>
+                  <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Gateways</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ color: '#8b5cf6', fontSize: '1.5rem', fontWeight: 'bold' }}>100%</div>
+                  <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>Secure</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
         
         {/* Login Form */}
         <div style={{
@@ -235,11 +239,20 @@ const Login = () => {
               justifyContent: 'center',
               animation: 'pulse 2s infinite'
             }}>
-              <img 
-                src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
-                alt="BPAY" 
-                style={{ width: '60px', height: '60px', objectFit: 'contain' }}
-              />
+              <div style={{
+                width: '60px',
+                height: '60px',
+                backgroundColor: '#3b82f6',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '1.5rem',
+                fontWeight: 'bold'
+              }}>
+                BP
+              </div>
             </div>
             <h1 style={{ 
               fontSize: '2.5rem', 
@@ -260,7 +273,8 @@ const Login = () => {
               display: 'flex', 
               justifyContent: 'center', 
               gap: '0.5rem',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              flexWrap: 'wrap'
             }}>
               <div style={{
                 backgroundColor: 'rgba(16, 185, 129, 0.2)',
@@ -270,7 +284,7 @@ const Login = () => {
                 borderRadius: '20px',
                 fontSize: '0.75rem',
                 fontWeight: '600'
-              }}>KES Deposits</div>
+              }}>KES</div>
               <div style={{
                 backgroundColor: 'rgba(59, 130, 246, 0.2)',
                 border: '1px solid #3b82f6',
@@ -279,14 +293,7 @@ const Login = () => {
                 borderRadius: '20px',
                 fontSize: '0.75rem',
                 fontWeight: '600'
-              }}>NGN Deposits</div>
-            </div>
-            
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              gap: '0.5rem'
-            }}>
+              }}>NGN</div>
               <div style={{
                 backgroundColor: 'rgba(245, 158, 11, 0.2)',
                 border: '1px solid #f59e0b',
@@ -295,7 +302,7 @@ const Login = () => {
                 borderRadius: '20px',
                 fontSize: '0.75rem',
                 fontWeight: '600'
-              }}>BTC Deposits</div>
+              }}>BTC</div>
               <div style={{
                 backgroundColor: 'rgba(139, 92, 246, 0.2)',
                 border: '1px solid #8b5cf6',
@@ -304,178 +311,178 @@ const Login = () => {
                 borderRadius: '20px',
                 fontSize: '0.75rem',
                 fontWeight: '600'
-              }}>ETH Deposits</div>
+              }}>ETH</div>
             </div>
           </div>
 
-        <div style={{ 
-          display: 'flex', 
-          backgroundColor: '#334155', 
-          borderRadius: '8px', 
-          padding: '0.25rem',
-          marginBottom: '1.5rem'
-        }}>
-          <button
-            onClick={() => setIsLogin(true)}
-            style={{
-              flex: 1,
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
-              fontWeight: '500',
-              border: 'none',
-              cursor: 'pointer',
-              backgroundColor: isLogin ? '#1e293b' : 'transparent',
-              color: isLogin ? '#60a5fa' : '#94a3b8'
-            }}
-          >
-            Sign In
-          </button>
-          <button
-            onClick={() => setIsLogin(false)}
-            style={{
-              flex: 1,
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
-              fontWeight: '500',
-              border: 'none',
-              cursor: 'pointer',
-              backgroundColor: !isLogin ? '#1e293b' : 'transparent',
-              color: !isLogin ? '#60a5fa' : '#94a3b8'
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
-        {error && (
-          <div style={{
-            backgroundColor: 'rgba(127, 29, 29, 0.5)',
-            borderLeft: '4px solid #f87171',
-            padding: '1rem',
-            marginBottom: '1.5rem',
-            borderRadius: '4px'
+          <div style={{ 
+            display: 'flex', 
+            backgroundColor: '#334155', 
+            borderRadius: '8px', 
+            padding: '0.25rem',
+            marginBottom: '1.5rem'
           }}>
-            <p style={{ color: '#fca5a5', fontSize: '0.875rem', margin: 0 }}>{error}</p>
+            <button
+              onClick={() => setIsLogin(true)}
+              style={{
+                flex: 1,
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                border: 'none',
+                cursor: 'pointer',
+                backgroundColor: isLogin ? '#1e293b' : 'transparent',
+                color: isLogin ? '#60a5fa' : '#94a3b8'
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => setIsLogin(false)}
+              style={{
+                flex: 1,
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                border: 'none',
+                cursor: 'pointer',
+                backgroundColor: !isLogin ? '#1e293b' : 'transparent',
+                color: !isLogin ? '#60a5fa' : '#94a3b8'
+              }}
+            >
+              Sign Up
+            </button>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  backgroundColor: '#334155',
-                  border: '1px solid #475569',
-                  borderRadius: '8px',
-                  color: 'white',
-                  fontSize: '1rem'
-                }}
-                required
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  backgroundColor: '#334155',
-                  border: '1px solid #475569',
-                  borderRadius: '8px',
-                  color: 'white',
-                  fontSize: '1rem'
-                }}
-                required
-              />
-            </div>
-          )}
-          
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            value={formData.email}
-            onChange={handleChange}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              backgroundColor: '#334155',
-              border: '1px solid #475569',
-              borderRadius: '8px',
-              color: 'white',
-              fontSize: '1rem',
-              marginBottom: '1rem'
-            }}
-            required
-          />
-          
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              backgroundColor: '#334155',
-              border: '1px solid #475569',
-              borderRadius: '8px',
-              color: 'white',
-              fontSize: '1rem',
-              marginBottom: '1rem'
-            }}
-            required
-          />
-          
-          {isLogin && (
-            <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
-              <button 
-                type="button" 
-                style={{
-                  fontSize: '0.875rem',
-                  color: '#60a5fa',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-                onClick={() => alert('Forgot password feature coming soon!')}
-              >
-                Forgot your password?
-              </button>
+          {error && (
+            <div style={{
+              backgroundColor: 'rgba(127, 29, 29, 0.5)',
+              borderLeft: '4px solid #f87171',
+              padding: '1rem',
+              marginBottom: '1.5rem',
+              borderRadius: '4px'
+            }}>
+              <p style={{ color: '#fca5a5', fontSize: '0.875rem', margin: 0 }}>{error}</p>
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: '100%',
-              backgroundColor: '#2563eb',
-              color: 'white',
-              padding: '0.75rem 1rem',
-              borderRadius: '8px',
-              fontWeight: '500',
-              border: 'none',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.5 : 1,
-              fontSize: '1rem'
-            }}
-          >
-            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
-          </button>
-        </form>
+          <form onSubmit={handleSubmit}>
+            {!isLogin && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    backgroundColor: '#334155',
+                    border: '1px solid #475569',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '1rem'
+                  }}
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    backgroundColor: '#334155',
+                    border: '1px solid #475569',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '1rem'
+                  }}
+                  required
+                />
+              </div>
+            )}
+            
+            <input
+              type="email"
+              name="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                backgroundColor: '#334155',
+                border: '1px solid #475569',
+                borderRadius: '8px',
+                color: 'white',
+                fontSize: '1rem',
+                marginBottom: '1rem'
+              }}
+              required
+            />
+            
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                backgroundColor: '#334155',
+                border: '1px solid #475569',
+                borderRadius: '8px',
+                color: 'white',
+                fontSize: '1rem',
+                marginBottom: '1rem'
+              }}
+              required
+            />
+            
+            {isLogin && (
+              <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+                <button 
+                  type="button" 
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#60a5fa',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => alert('Forgot password feature coming soon!')}
+                >
+                  Forgot your password?
+                </button>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%',
+                backgroundColor: '#2563eb',
+                color: 'white',
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                fontWeight: '500',
+                border: 'none',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.5 : 1,
+                fontSize: '1rem'
+              }}
+            >
+              {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
+            </button>
+          </form>
 
           <div style={{ 
             textAlign: 'center', 
@@ -502,7 +509,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );
