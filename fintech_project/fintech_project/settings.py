@@ -49,10 +49,11 @@ MIDDLEWARE = [
 try:
     import whitenoise
     INSTALLED_APPS.insert(1, 'whitenoise.runserver_nostatic')
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     WHITENOISE_USE_FINDERS = True
     WHITENOISE_AUTOREFRESH = True
+    WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['js', 'css']
 except ImportError:
     pass
 
@@ -123,6 +124,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Include React build static files
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    BASE_DIR.parent / 'frontend' / 'build' / 'static',
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
