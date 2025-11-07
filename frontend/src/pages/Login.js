@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login, register } from '../services/api';
 
@@ -12,42 +12,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [currentFeature, setCurrentFeature] = useState(0);
   const navigate = useNavigate();
-
-  const features = [
-    { 
-      title: 'Multi-Currency Wallet', 
-      desc: 'Manage KES, NGN, BTC, ETH & USDT in one secure platform',
-      icon: 'fas fa-wallet',
-      color: '#10b981'
-    },
-    { 
-      title: 'Instant Deposits', 
-      desc: 'M-Pesa, Bank transfers & Crypto deposits in seconds',
-      icon: 'fas fa-bolt',
-      color: '#3b82f6'
-    },
-    { 
-      title: 'Secure Withdrawals', 
-      desc: 'Withdraw to KES & NGN bank accounts safely',
-      icon: 'fas fa-shield-alt',
-      color: '#f59e0b'
-    },
-    { 
-      title: 'Real-time Exchange', 
-      desc: 'Live crypto rates with instant conversion',
-      icon: 'fas fa-exchange-alt',
-      color: '#8b5cf6'
-    }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentFeature(prev => (prev + 1) % features.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,29 +47,27 @@ const Login = () => {
   const handleForgotPassword = () => {
     const email = prompt('Enter your email address:');
     if (email) {
-      // TODO: Implement actual password reset API call
       alert(`Password reset instructions will be sent to ${email}`);
     }
   };
 
   const handleGoogleSignIn = () => {
-    // TODO: Implement Google OAuth
     alert('Google Sign-In will be implemented with proper OAuth setup');
   };
 
   return (
     <>
-      {/* CDN Links */}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       
       <div style={{
         minHeight: '100vh',
         background: '#0f172a',
+        padding: '1rem',
         display: 'flex',
-        position: 'relative',
-        overflow: 'hidden'
-      }} className="login-container">
-        {/* Animated Background Pattern */}
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        {/* Animated Background */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -124,258 +87,44 @@ const Login = () => {
               0%, 100% { transform: translateY(0px) rotate(0deg); }
               50% { transform: translateY(-20px) rotate(5deg); }
             }
-            @keyframes slideUp {
-              from { opacity: 0; transform: translateY(30px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes fadeIn {
-              from { opacity: 0; }
-              to { opacity: 1; }
-            }
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); }
-              50% { transform: scale(1.05); }
-            }
-            .feature-card {
-              transition: all 0.3s ease;
-            }
-            .feature-card:hover {
-              transform: translateY(-5px);
-            }
             
-            /* Mobile Responsive Styles */
-            @media (max-width: 768px) {
-              .login-container {
-                flex-direction: column !important;
-              }
-              .left-side {
-                display: none !important;
-              }
-              .right-side {
-                width: 100% !important;
-                padding: 2rem 1.5rem !important;
-                box-shadow: none !important;
-              }
-              .mobile-header {
-                display: block !important;
-                text-align: center;
-                margin-bottom: 2rem;
-              }
-              .desktop-header {
-                display: none !important;
-              }
-              .currency-badges {
-                justify-content: center !important;
-                gap: 0.3rem !important;
-              }
-              .currency-badge {
-                padding: 0.3rem 0.6rem !important;
-                font-size: 0.7rem !important;
-              }
-              .form-grid {
-                grid-template-columns: 1fr !important;
-                gap: 0.8rem !important;
-              }
-              .stats-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1rem !important;
-              }
+            .login-card {
+              width: 100%;
+              max-width: 400px;
+              background: #1e293b;
+              border: 1px solid #334155;
+              border-radius: 20px;
+              padding: 2rem;
+              position: relative;
+              z-index: 2;
+              box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             }
             
             @media (max-width: 480px) {
-              .right-side {
-                padding: 1.5rem 1rem !important;
-              }
-              .currency-badges {
-                gap: 0.2rem !important;
+              .login-card {
+                padding: 1.5rem;
+                margin: 0.5rem;
+                max-width: calc(100vw - 2rem);
               }
               .currency-badge {
                 padding: 0.25rem 0.5rem !important;
                 font-size: 0.65rem !important;
               }
+              .form-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+              }
             }
           `}
         </style>
 
-        {/* Left Side - Features */}
-        <div className="left-side" style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '2rem 4rem',
-          position: 'relative',
-          zIndex: 2
-        }}>
-          {/* Logo Section */}
+        {/* Login Card - Mobile First */}
+        <div className="login-card">
+          {/* Header with Logo */}
           <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: '3rem',
-            animation: 'slideUp 0.8s ease-out'
-          }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              borderRadius: '16px',
-              marginRight: '1rem',
-              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-              animation: 'pulse 2s infinite',
-              overflow: 'hidden'
-            }}>
-              <img 
-                src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
-                alt="BPAY Logo" 
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
-                }}
-              />
-            </div>
-            <div>
-              <h1 style={{
-                fontSize: '2.5rem',
-                fontWeight: 'bold',
-                color: 'white',
-                margin: 0,
-                textShadow: '0 2px 10px rgba(0,0,0,0.3)'
-              }}>
-                BPAY
-              </h1>
-              <p style={{
-                color: 'rgba(255,255,255,0.8)',
-                margin: 0,
-                fontSize: '0.9rem'
-              }}>
-                Multi-Currency Wallet
-              </p>
-            </div>
-          </div>
-
-          {/* Main Heading */}
-          <div style={{
-            marginBottom: '2rem',
-            animation: 'slideUp 1s ease-out'
-          }}>
-            <h2 style={{
-              fontSize: '3rem',
-              fontWeight: 'bold',
-              color: 'white',
-              margin: '0 0 1rem 0',
-              lineHeight: '1.2',
-              textShadow: '0 2px 20px rgba(0,0,0,0.3)'
-            }}>
-              Your Gateway to<br />Digital Finance
-            </h2>
-            <p style={{
-              fontSize: '1.2rem',
-              color: 'rgba(255,255,255,0.9)',
-              margin: 0,
-              lineHeight: '1.6'
-            }}>
-              Seamlessly manage multiple currencies with advanced security and real-time exchange rates.
-            </p>
-          </div>
-
-          {/* Rotating Features */}
-          <div style={{
-            height: '200px',
+            textAlign: 'center',
             marginBottom: '2rem'
           }}>
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="feature-card"
-                style={{
-                  display: currentFeature === index ? 'block' : 'none',
-                  animation: currentFeature === index ? 'fadeIn 0.5s ease-out' : 'none',
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '20px',
-                  padding: '2rem',
-                  border: '1px solid rgba(51, 65, 85, 0.5)'
-                }}
-              >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '1rem'
-                }}>
-                  <div style={{
-                    width: '50px',
-                    height: '50px',
-                    backgroundColor: feature.color,
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: '1rem'
-                  }}>
-                    <i className={feature.icon} style={{ color: 'white', fontSize: '1.2rem' }}></i>
-                  </div>
-                  <h3 style={{
-                    color: 'white',
-                    fontSize: '1.3rem',
-                    fontWeight: '600',
-                    margin: 0
-                  }}>
-                    {feature.title}
-                  </h3>
-                </div>
-                <p style={{
-                  color: 'rgba(255,255,255,0.8)',
-                  fontSize: '1rem',
-                  margin: 0,
-                  lineHeight: '1.5'
-                }}>
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Stats */}
-          <div className="stats-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2rem',
-            animation: 'slideUp 1.2s ease-out'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>5</div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Currencies</div>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>24/7</div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Support</div>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>2</div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Gateways</div>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>100%</div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Secure</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side - Login Form */}
-        <div className="right-side" style={{
-          width: '500px',
-          background: '#1e293b',
-          border: '1px solid #334155',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '3rem',
-          position: 'relative',
-          zIndex: 2,
-          boxShadow: '-10px 0 50px rgba(0,0,0,0.3)'
-        }}>
-          {/* Mobile Header - Only visible on mobile */}
-          <div className="mobile-header" style={{ display: 'none' }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
@@ -417,15 +166,8 @@ const Login = () => {
                 </p>
               </div>
             </div>
-          </div>
-          {/* Form Header */}
-          <div className="desktop-header" style={{
-            textAlign: 'center',
-            marginBottom: '2rem',
-            animation: 'slideUp 0.6s ease-out'
-          }}>
             <h3 style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: 'white',
               margin: '0 0 0.5rem 0'
@@ -435,84 +177,84 @@ const Login = () => {
             <p style={{
               color: '#94a3b8',
               margin: 0,
-              fontSize: '1rem'
+              fontSize: '0.9rem'
             }}>
-              {isLogin ? 'Sign in to your BPAY account' : 'Join thousands of users worldwide'}
+              {isLogin ? 'Sign in to your account' : 'Join thousands of users'}
             </p>
           </div>
 
           {/* Currency Support Badges */}
-          <div className="currency-badges" style={{
+          <div style={{
             display: 'flex',
             justifyContent: 'center',
-            gap: '0.5rem',
-            marginBottom: '2rem',
+            gap: '0.4rem',
+            marginBottom: '1.5rem',
             flexWrap: 'wrap'
           }}>
             <span className="currency-badge" style={{
               background: '#16a34a',
               color: 'white',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
+              padding: '0.3rem 0.6rem',
+              borderRadius: '15px',
+              fontSize: '0.7rem',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.2rem'
             }}>
-              <img src="https://flagcdn.com/w20/ke.png" alt="KES" style={{width: '16px', height: '12px'}} /> KES
+              <img src="https://flagcdn.com/w20/ke.png" alt="KES" style={{width: '14px', height: '10px'}} /> KES
             </span>
             <span className="currency-badge" style={{
               background: '#2563eb',
               color: 'white',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
+              padding: '0.3rem 0.6rem',
+              borderRadius: '15px',
+              fontSize: '0.7rem',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.2rem'
             }}>
-              <img src="https://flagcdn.com/w20/ng.png" alt="NGN" style={{width: '16px', height: '12px'}} /> NGN
+              <img src="https://flagcdn.com/w20/ng.png" alt="NGN" style={{width: '14px', height: '10px'}} /> NGN
             </span>
             <span className="currency-badge" style={{
               background: '#f59e0b',
               color: 'white',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
+              padding: '0.3rem 0.6rem',
+              borderRadius: '15px',
+              fontSize: '0.7rem',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.2rem'
             }}>
-              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/btc.svg" alt="BTC" style={{width: '16px', height: '16px'}} /> BTC
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/btc.svg" alt="BTC" style={{width: '14px', height: '14px'}} /> BTC
             </span>
             <span className="currency-badge" style={{
               background: '#8b5cf6',
               color: 'white',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
+              padding: '0.3rem 0.6rem',
+              borderRadius: '15px',
+              fontSize: '0.7rem',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.2rem'
             }}>
-              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/eth.svg" alt="ETH" style={{width: '16px', height: '16px'}} /> ETH
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/eth.svg" alt="ETH" style={{width: '14px', height: '14px'}} /> ETH
             </span>
             <span className="currency-badge" style={{
               background: '#10b981',
               color: 'white',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
+              padding: '0.3rem 0.6rem',
+              borderRadius: '15px',
+              fontSize: '0.7rem',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.2rem'
             }}>
-              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/usdt.svg" alt="USDT" style={{width: '16px', height: '16px'}} /> USDT
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/usdt.svg" alt="USDT" style={{width: '14px', height: '14px'}} /> USDT
             </span>
           </div>
 
@@ -522,7 +264,7 @@ const Login = () => {
             background: '#334155',
             borderRadius: '12px',
             padding: '0.25rem',
-            marginBottom: '2rem'
+            marginBottom: '1.5rem'
           }}>
             <button
               onClick={() => setIsLogin(true)}
