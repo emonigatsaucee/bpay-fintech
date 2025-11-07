@@ -103,7 +103,7 @@ const Login = () => {
         display: 'flex',
         position: 'relative',
         overflow: 'hidden'
-      }}>
+      }} className="login-container">
         {/* Animated Background Pattern */}
         <div style={{
           position: 'absolute',
@@ -142,11 +142,63 @@ const Login = () => {
             .feature-card:hover {
               transform: translateY(-5px);
             }
+            
+            /* Mobile Responsive Styles */
+            @media (max-width: 768px) {
+              .login-container {
+                flex-direction: column !important;
+              }
+              .left-side {
+                display: none !important;
+              }
+              .right-side {
+                width: 100% !important;
+                padding: 2rem 1.5rem !important;
+                box-shadow: none !important;
+              }
+              .mobile-header {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 2rem;
+              }
+              .desktop-header {
+                display: none !important;
+              }
+              .currency-badges {
+                justify-content: center !important;
+                gap: 0.3rem !important;
+              }
+              .currency-badge {
+                padding: 0.3rem 0.6rem !important;
+                font-size: 0.7rem !important;
+              }
+              .form-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+              }
+              .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
+              }
+            }
+            
+            @media (max-width: 480px) {
+              .right-side {
+                padding: 1.5rem 1rem !important;
+              }
+              .currency-badges {
+                gap: 0.2rem !important;
+              }
+              .currency-badge {
+                padding: 0.25rem 0.5rem !important;
+                font-size: 0.65rem !important;
+              }
+            }
           `}
         </style>
 
         {/* Left Side - Features */}
-        <div style={{
+        <div className="left-side" style={{
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
@@ -284,7 +336,7 @@ const Login = () => {
           </div>
 
           {/* Stats */}
-          <div style={{
+          <div className="stats-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '2rem',
@@ -310,7 +362,7 @@ const Login = () => {
         </div>
 
         {/* Right Side - Login Form */}
-        <div style={{
+        <div className="right-side" style={{
           width: '500px',
           background: '#1e293b',
           border: '1px solid #334155',
@@ -322,8 +374,52 @@ const Login = () => {
           zIndex: 2,
           boxShadow: '-10px 0 50px rgba(0,0,0,0.3)'
         }}>
+          {/* Mobile Header - Only visible on mobile */}
+          <div className="mobile-header" style={{ display: 'none' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '1rem'
+            }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                marginRight: '1rem',
+                overflow: 'hidden'
+              }}>
+                <img 
+                  src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
+                  alt="BPAY Logo" 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </div>
+              <div>
+                <h1 style={{
+                  fontSize: '1.8rem',
+                  fontWeight: 'bold',
+                  color: 'white',
+                  margin: 0
+                }}>
+                  BPAY
+                </h1>
+                <p style={{
+                  color: 'rgba(255,255,255,0.8)',
+                  margin: 0,
+                  fontSize: '0.8rem'
+                }}>
+                  Multi-Currency Wallet
+                </p>
+              </div>
+            </div>
+          </div>
           {/* Form Header */}
-          <div style={{
+          <div className="desktop-header" style={{
             textAlign: 'center',
             marginBottom: '2rem',
             animation: 'slideUp 0.6s ease-out'
@@ -346,14 +442,14 @@ const Login = () => {
           </div>
 
           {/* Currency Support Badges */}
-          <div style={{
+          <div className="currency-badges" style={{
             display: 'flex',
             justifyContent: 'center',
             gap: '0.5rem',
             marginBottom: '2rem',
             flexWrap: 'wrap'
           }}>
-            <span style={{
+            <span className="currency-badge" style={{
               background: '#16a34a',
               color: 'white',
               padding: '0.4rem 0.8rem',
@@ -366,7 +462,7 @@ const Login = () => {
             }}>
               <img src="https://flagcdn.com/w20/ke.png" alt="KES" style={{width: '16px', height: '12px'}} /> KES
             </span>
-            <span style={{
+            <span className="currency-badge" style={{
               background: '#2563eb',
               color: 'white',
               padding: '0.4rem 0.8rem',
@@ -379,7 +475,7 @@ const Login = () => {
             }}>
               <img src="https://flagcdn.com/w20/ng.png" alt="NGN" style={{width: '16px', height: '12px'}} /> NGN
             </span>
-            <span style={{
+            <span className="currency-badge" style={{
               background: '#f59e0b',
               color: 'white',
               padding: '0.4rem 0.8rem',
@@ -392,7 +488,7 @@ const Login = () => {
             }}>
               <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/btc.svg" alt="BTC" style={{width: '16px', height: '16px'}} /> BTC
             </span>
-            <span style={{
+            <span className="currency-badge" style={{
               background: '#8b5cf6',
               color: 'white',
               padding: '0.4rem 0.8rem',
@@ -405,7 +501,7 @@ const Login = () => {
             }}>
               <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/eth.svg" alt="ETH" style={{width: '16px', height: '16px'}} /> ETH
             </span>
-            <span style={{
+            <span className="currency-badge" style={{
               background: '#10b981',
               color: 'white',
               padding: '0.4rem 0.8rem',
@@ -486,7 +582,7 @@ const Login = () => {
           {/* Form */}
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {!isLogin && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div style={{ position: 'relative' }}>
                   <i className="fas fa-user" style={{
                     position: 'absolute',
