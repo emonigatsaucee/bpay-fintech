@@ -83,6 +83,10 @@ const Login = () => {
 
         <style>
           {`
+            * {
+              box-sizing: border-box;
+            }
+            
             @keyframes float {
               0%, 100% { transform: translateY(0px) rotate(0deg); }
               50% { transform: translateY(-20px) rotate(5deg); }
@@ -98,21 +102,40 @@ const Login = () => {
               position: relative;
               z-index: 2;
               box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+              margin: 1rem;
+            }
+            
+            @media (max-width: 768px) {
+              .login-card {
+                padding: 1.5rem;
+                margin: 0.5rem;
+                max-width: calc(100vw - 1rem);
+                border-radius: 15px;
+              }
+              
+              .currency-badge {
+                padding: 0.25rem 0.5rem !important;
+                font-size: 0.65rem !important;
+                border-radius: 12px !important;
+              }
+              
+              .form-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+              }
             }
             
             @media (max-width: 480px) {
               .login-card {
-                padding: 1.5rem;
-                margin: 0.5rem;
-                max-width: calc(100vw - 2rem);
+                padding: 1rem;
+                margin: 0.25rem;
+                border-radius: 12px;
+                max-width: calc(100vw - 0.5rem);
               }
+              
               .currency-badge {
-                padding: 0.25rem 0.5rem !important;
-                font-size: 0.65rem !important;
-              }
-              .form-grid {
-                grid-template-columns: 1fr !important;
-                gap: 0.8rem !important;
+                padding: 0.2rem 0.4rem !important;
+                font-size: 0.6rem !important;
               }
             }
           `}
