@@ -45,68 +45,138 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <div className="bg-slate-800 rounded-xl p-8 w-full max-w-md border border-slate-700 shadow-2xl">
-        <div className="text-center mb-8">
-          <div className="bg-white rounded-full p-3 w-16 h-16 mx-auto mb-4">
-            <img 
-              src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
-              alt="BPAY" 
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">BPAY</h1>
-          <p className="text-slate-400 mb-4">Multi-Currency Wallet System</p>
-          <div className="flex justify-center space-x-2">
-            <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">KES</span>
-            <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">NGN</span>
-            <span className="bg-yellow-600 text-white px-2 py-1 rounded text-xs font-medium">BTC</span>
-            <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs font-medium">ETH</span>
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#0f172a',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem'
+    }}>
+      <div style={{
+        backgroundColor: '#1e293b',
+        borderRadius: '12px',
+        padding: '2rem',
+        width: '100%',
+        maxWidth: '400px',
+        border: '1px solid #334155',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <h1 style={{ 
+            fontSize: '2rem', 
+            fontWeight: 'bold', 
+            color: 'white', 
+            marginBottom: '0.5rem' 
+          }}>
+            BPAY
+          </h1>
+          <p style={{ color: '#94a3b8', marginBottom: '1rem' }}>
+            Multi-Currency Wallet System
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+            <span style={{ 
+              backgroundColor: '#16a34a', 
+              color: 'white', 
+              padding: '0.25rem 0.5rem', 
+              borderRadius: '4px', 
+              fontSize: '0.75rem' 
+            }}>KES</span>
+            <span style={{ 
+              backgroundColor: '#2563eb', 
+              color: 'white', 
+              padding: '0.25rem 0.5rem', 
+              borderRadius: '4px', 
+              fontSize: '0.75rem' 
+            }}>NGN</span>
+            <span style={{ 
+              backgroundColor: '#ca8a04', 
+              color: 'white', 
+              padding: '0.25rem 0.5rem', 
+              borderRadius: '4px', 
+              fontSize: '0.75rem' 
+            }}>BTC</span>
+            <span style={{ 
+              backgroundColor: '#7c3aed', 
+              color: 'white', 
+              padding: '0.25rem 0.5rem', 
+              borderRadius: '4px', 
+              fontSize: '0.75rem' 
+            }}>ETH</span>
           </div>
         </div>
 
-        <div className="flex bg-slate-700 rounded-lg p-1 mb-6">
+        <div style={{ 
+          display: 'flex', 
+          backgroundColor: '#334155', 
+          borderRadius: '8px', 
+          padding: '0.25rem',
+          marginBottom: '1.5rem'
+        }}>
           <button
             onClick={() => setIsLogin(true)}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              isLogin 
-                ? 'bg-slate-800 text-blue-400 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-300'
-            }`}
+            style={{
+              flex: 1,
+              padding: '0.5rem 1rem',
+              borderRadius: '6px',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              border: 'none',
+              cursor: 'pointer',
+              backgroundColor: isLogin ? '#1e293b' : 'transparent',
+              color: isLogin ? '#60a5fa' : '#94a3b8'
+            }}
           >
             Sign In
           </button>
           <button
             onClick={() => setIsLogin(false)}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              !isLogin 
-                ? 'bg-slate-800 text-blue-400 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-300'
-            }`}
+            style={{
+              flex: 1,
+              padding: '0.5rem 1rem',
+              borderRadius: '6px',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              border: 'none',
+              cursor: 'pointer',
+              backgroundColor: !isLogin ? '#1e293b' : 'transparent',
+              color: !isLogin ? '#60a5fa' : '#94a3b8'
+            }}
           >
             Sign Up
           </button>
         </div>
 
         {error && (
-          <div className="bg-red-900 bg-opacity-50 border-l-4 border-red-400 p-4 mb-6 rounded">
-            <div className="flex">
-              <i className="bi bi-exclamation-triangle-fill text-red-400 mr-3"></i>
-              <p className="text-red-300 text-sm">{error}</p>
-            </div>
+          <div style={{
+            backgroundColor: 'rgba(127, 29, 29, 0.5)',
+            borderLeft: '4px solid #f87171',
+            padding: '1rem',
+            marginBottom: '1.5rem',
+            borderRadius: '4px'
+          }}>
+            <p style={{ color: '#fca5a5', fontSize: '0.875rem', margin: 0 }}>{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit}>
           {!isLogin && (
-            <div className="grid grid-cols-2 gap-4">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <input
                 type="text"
                 name="firstName"
                 placeholder="First Name"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  backgroundColor: '#334155',
+                  border: '1px solid #475569',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '1rem'
+                }}
                 required
               />
               <input
@@ -115,7 +185,15 @@ const Login = () => {
                 placeholder="Last Name"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  backgroundColor: '#334155',
+                  border: '1px solid #475569',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '1rem'
+                }}
                 required
               />
             </div>
@@ -127,7 +205,16 @@ const Login = () => {
             placeholder="Email address"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#334155',
+              border: '1px solid #475569',
+              borderRadius: '8px',
+              color: 'white',
+              fontSize: '1rem',
+              marginBottom: '1rem'
+            }}
             required
           />
           
@@ -137,15 +224,30 @@ const Login = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#334155',
+              border: '1px solid #475569',
+              borderRadius: '8px',
+              color: 'white',
+              fontSize: '1rem',
+              marginBottom: '1rem'
+            }}
             required
           />
           
           {isLogin && (
-            <div className="text-right">
+            <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
               <button 
                 type="button" 
-                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                style={{
+                  fontSize: '0.875rem',
+                  color: '#60a5fa',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
                 onClick={() => alert('Forgot password feature coming soon!')}
               >
                 Forgot your password?
@@ -156,18 +258,26 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+            style={{
+              width: '100%',
+              backgroundColor: '#2563eb',
+              color: 'white',
+              padding: '0.75rem 1rem',
+              borderRadius: '8px',
+              fontWeight: '500',
+              border: 'none',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.5 : 1,
+              fontSize: '1rem'
+            }}
           >
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-slate-400 text-sm">
+        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+          <p style={{ color: '#94a3b8', fontSize: '0.875rem', margin: 0 }}>
             Supports deposits in KES, NGN, BTC & ETH
-          </p>
-          <p className="text-slate-500 text-xs mt-2">
-            Withdrawals available in KES & NGN only
           </p>
         </div>
       </div>
