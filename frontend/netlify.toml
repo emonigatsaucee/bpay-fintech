@@ -1,8 +1,7 @@
 [build]
   base = "frontend"
-  publish = "frontend/build"
+  publish = "build"
   command = "npm install && npm run build"
-  ignore = "/bin/false"
 
 [[redirects]]
   from = "/*"
