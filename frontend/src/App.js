@@ -12,7 +12,7 @@ import { AuthProvider, useAuth } from './services/AuthContext';
 
 function ProtectedRoute({ children }) {
   const { token } = useAuth();
-  return token ? children : <Navigate to="/login" />;
+  return token ? children : <Navigate to="/auth" />;
 }
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
           />
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/auth" element={<Login />} />
             <Route path="/" element={
               <ProtectedRoute>
                 <div>
