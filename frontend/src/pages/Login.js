@@ -24,32 +24,7 @@ const Login = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: "YOUR_GOOGLE_CLIENT_ID",
-        callback: handleGoogleResponse
-      });
-      
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-signin-button"),
-        { theme: "outline", size: "large", width: "100%" }
-      );
-    }
-  }, []);
-
-  const handleGoogleResponse = async (response) => {
-    try {
-      setLoading(true);
-      const result = await googleAuth(response.credential);
-      localStorage.setItem('token', result.access);
-      navigate('/dashboard');
-    } catch (err) {
-      setError('Google authentication failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Google Sign-In will be added later with proper client ID
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -262,22 +237,7 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-600"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-3 bg-slate-800 text-slate-400">Or continue with</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Google Sign In */}
-          <div className="mt-6">
-            <div id="google-signin-button" className="w-full"></div>
-          </div>
+
         </div>
 
         {/* System Features */}
