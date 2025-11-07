@@ -1,6 +1,6 @@
 const API_BASE_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:8000/api'
-  : '/api';
+  : 'https://bpay-fintech-project.onrender.com/api';
 
 export const login = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/auth/login/`, {
