@@ -18,7 +18,7 @@ const Login = () => {
   const features = [
     { 
       title: 'Multi-Currency Wallet', 
-      desc: 'Manage KES, NGN, BTC & ETH in one secure platform',
+      desc: 'Manage KES, NGN, BTC, ETH & USDT in one secure platform',
       icon: 'fas fa-wallet',
       color: '#10b981'
     },
@@ -79,14 +79,27 @@ const Login = () => {
     });
   };
 
+  const handleForgotPassword = () => {
+    const email = prompt('Enter your email address:');
+    if (email) {
+      // TODO: Implement actual password reset API call
+      alert(`Password reset instructions will be sent to ${email}`);
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    // TODO: Implement Google OAuth
+    alert('Google Sign-In will be implemented with proper OAuth setup');
+  };
+
   return (
     <>
-      {/* Font Awesome CDN */}
+      {/* CDN Links */}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       
       <div style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: '#0f172a',
         display: 'flex',
         position: 'relative',
         overflow: 'hidden'
@@ -99,8 +112,8 @@ const Login = () => {
           right: 0,
           bottom: 0,
           backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, transparent 50%)
+            radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
           `,
           animation: 'float 20s ease-in-out infinite'
         }}></div>
@@ -152,13 +165,13 @@ const Login = () => {
             <div style={{
               width: '60px',
               height: '60px',
-              background: 'linear-gradient(135deg, #667eea, #764ba2)',
+              background: '#3b82f6',
               borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               marginRight: '1rem',
-              boxShadow: '0 10px 30px rgba(102, 126, 234, 0.3)',
+              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
               animation: 'pulse 2s infinite'
             }}>
               <span style={{
@@ -227,11 +240,11 @@ const Login = () => {
                 style={{
                   display: currentFeature === index ? 'block' : 'none',
                   animation: currentFeature === index ? 'fadeIn 0.5s ease-out' : 'none',
-                  background: 'rgba(255,255,255,0.1)',
+                  background: 'rgba(30, 41, 59, 0.8)',
                   backdropFilter: 'blur(10px)',
                   borderRadius: '20px',
                   padding: '2rem',
-                  border: '1px solid rgba(255,255,255,0.2)'
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
                 }}
               >
                 <div style={{
@@ -280,7 +293,7 @@ const Login = () => {
             animation: 'slideUp 1.2s ease-out'
           }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>4</div>
+              <div style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>5</div>
               <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Currencies</div>
             </div>
             <div style={{ textAlign: 'center' }}>
@@ -301,15 +314,15 @@ const Login = () => {
         {/* Right Side - Login Form */}
         <div style={{
           width: '500px',
-          background: 'rgba(255,255,255,0.95)',
-          backdropFilter: 'blur(20px)',
+          background: '#1e293b',
+          border: '1px solid #334155',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '3rem',
           position: 'relative',
           zIndex: 2,
-          boxShadow: '-10px 0 50px rgba(0,0,0,0.1)'
+          boxShadow: '-10px 0 50px rgba(0,0,0,0.3)'
         }}>
           {/* Form Header */}
           <div style={{
@@ -320,13 +333,13 @@ const Login = () => {
             <h3 style={{
               fontSize: '2rem',
               fontWeight: 'bold',
-              color: '#1f2937',
+              color: 'white',
               margin: '0 0 0.5rem 0'
             }}>
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h3>
             <p style={{
-              color: '#6b7280',
+              color: '#94a3b8',
               margin: 0,
               fontSize: '1rem'
             }}>
@@ -343,7 +356,7 @@ const Login = () => {
             flexWrap: 'wrap'
           }}>
             <span style={{
-              background: 'linear-gradient(135deg, #10b981, #059669)',
+              background: '#16a34a',
               color: 'white',
               padding: '0.4rem 0.8rem',
               borderRadius: '20px',
@@ -353,10 +366,10 @@ const Login = () => {
               alignItems: 'center',
               gap: '0.3rem'
             }}>
-              <i className="fas fa-coins"></i> KES
+              <img src="https://flagcdn.com/w20/ke.png" alt="KES" style={{width: '16px', height: '12px'}} /> KES
             </span>
             <span style={{
-              background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+              background: '#2563eb',
               color: 'white',
               padding: '0.4rem 0.8rem',
               borderRadius: '20px',
@@ -366,10 +379,10 @@ const Login = () => {
               alignItems: 'center',
               gap: '0.3rem'
             }}>
-              <i className="fas fa-coins"></i> NGN
+              <img src="https://flagcdn.com/w20/ng.png" alt="NGN" style={{width: '16px', height: '12px'}} /> NGN
             </span>
             <span style={{
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              background: '#f59e0b',
               color: 'white',
               padding: '0.4rem 0.8rem',
               borderRadius: '20px',
@@ -379,10 +392,10 @@ const Login = () => {
               alignItems: 'center',
               gap: '0.3rem'
             }}>
-              <i className="fab fa-bitcoin"></i> BTC
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/btc.svg" alt="BTC" style={{width: '16px', height: '16px'}} /> BTC
             </span>
             <span style={{
-              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              background: '#8b5cf6',
               color: 'white',
               padding: '0.4rem 0.8rem',
               borderRadius: '20px',
@@ -392,14 +405,27 @@ const Login = () => {
               alignItems: 'center',
               gap: '0.3rem'
             }}>
-              <i className="fab fa-ethereum"></i> ETH
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/eth.svg" alt="ETH" style={{width: '16px', height: '16px'}} /> ETH
+            </span>
+            <span style={{
+              background: '#10b981',
+              color: 'white',
+              padding: '0.4rem 0.8rem',
+              borderRadius: '20px',
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.3rem'
+            }}>
+              <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/usdt.svg" alt="USDT" style={{width: '16px', height: '16px'}} /> USDT
             </span>
           </div>
 
           {/* Tab Switcher */}
           <div style={{
             display: 'flex',
-            background: '#f3f4f6',
+            background: '#334155',
             borderRadius: '12px',
             padding: '0.25rem',
             marginBottom: '2rem'
@@ -414,8 +440,8 @@ const Login = () => {
                 fontWeight: '600',
                 border: 'none',
                 cursor: 'pointer',
-                backgroundColor: isLogin ? 'white' : 'transparent',
-                color: isLogin ? '#667eea' : '#6b7280',
+                backgroundColor: isLogin ? '#1e293b' : 'transparent',
+                color: isLogin ? '#60a5fa' : '#94a3b8',
                 boxShadow: isLogin ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
                 transition: 'all 0.2s ease'
               }}
@@ -432,8 +458,8 @@ const Login = () => {
                 fontWeight: '600',
                 border: 'none',
                 cursor: 'pointer',
-                backgroundColor: !isLogin ? 'white' : 'transparent',
-                color: !isLogin ? '#667eea' : '#6b7280',
+                backgroundColor: !isLogin ? '#1e293b' : 'transparent',
+                color: !isLogin ? '#60a5fa' : '#94a3b8',
                 boxShadow: !isLogin ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
                 transition: 'all 0.2s ease'
               }}
@@ -445,8 +471,8 @@ const Login = () => {
           {/* Error Message */}
           {error && (
             <div style={{
-              background: '#fef2f2',
-              border: '1px solid #fecaca',
+              background: 'rgba(239, 68, 68, 0.1)',
+              border: '1px solid #ef4444',
               borderRadius: '8px',
               padding: '1rem',
               marginBottom: '1rem',
@@ -455,7 +481,7 @@ const Login = () => {
               gap: '0.5rem'
             }}>
               <i className="fas fa-exclamation-triangle" style={{ color: '#ef4444' }}></i>
-              <span style={{ color: '#dc2626', fontSize: '0.9rem' }}>{error}</span>
+              <span style={{ color: '#ef4444', fontSize: '0.9rem' }}>{error}</span>
             </div>
           )}
 
@@ -469,7 +495,7 @@ const Login = () => {
                     left: '1rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: '#9ca3af'
+                    color: '#94a3b8'
                   }}></i>
                   <input
                     type="text"
@@ -480,15 +506,17 @@ const Login = () => {
                     style={{
                       width: '100%',
                       padding: '1rem 1rem 1rem 2.5rem',
-                      border: '2px solid #e5e7eb',
+                      background: '#334155',
+                      border: '2px solid #475569',
+                      color: 'white',
                       borderRadius: '12px',
                       fontSize: '1rem',
                       outline: 'none',
                       transition: 'border-color 0.2s ease',
                       boxSizing: 'border-box'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                    onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                    onBlur={(e) => e.target.style.borderColor = '#475569'}
                     required
                   />
                 </div>
@@ -498,7 +526,7 @@ const Login = () => {
                     left: '1rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: '#9ca3af'
+                    color: '#94a3b8'
                   }}></i>
                   <input
                     type="text"
@@ -509,15 +537,17 @@ const Login = () => {
                     style={{
                       width: '100%',
                       padding: '1rem 1rem 1rem 2.5rem',
-                      border: '2px solid #e5e7eb',
+                      background: '#334155',
+                      border: '2px solid #475569',
+                      color: 'white',
                       borderRadius: '12px',
                       fontSize: '1rem',
                       outline: 'none',
                       transition: 'border-color 0.2s ease',
                       boxSizing: 'border-box'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                    onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                    onBlur={(e) => e.target.style.borderColor = '#475569'}
                     required
                   />
                 </div>
@@ -530,7 +560,7 @@ const Login = () => {
                 left: '1rem',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: '#9ca3af'
+                color: '#94a3b8'
               }}></i>
               <input
                 type="email"
@@ -541,15 +571,17 @@ const Login = () => {
                 style={{
                   width: '100%',
                   padding: '1rem 1rem 1rem 2.5rem',
-                  border: '2px solid #e5e7eb',
+                  background: '#334155',
+                  border: '2px solid #475569',
+                  color: 'white',
                   borderRadius: '12px',
                   fontSize: '1rem',
                   outline: 'none',
                   transition: 'border-color 0.2s ease',
                   boxSizing: 'border-box'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                onBlur={(e) => e.target.style.borderColor = '#475569'}
                 required
               />
             </div>
@@ -560,7 +592,7 @@ const Login = () => {
                 left: '1rem',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: '#9ca3af'
+                color: '#94a3b8'
               }}></i>
               <input
                 type="password"
@@ -571,15 +603,17 @@ const Login = () => {
                 style={{
                   width: '100%',
                   padding: '1rem 1rem 1rem 2.5rem',
-                  border: '2px solid #e5e7eb',
+                  background: '#334155',
+                  border: '2px solid #475569',
+                  color: 'white',
                   borderRadius: '12px',
                   fontSize: '1rem',
                   outline: 'none',
                   transition: 'border-color 0.2s ease',
                   boxSizing: 'border-box'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                onBlur={(e) => e.target.style.borderColor = '#475569'}
                 required
               />
             </div>
@@ -591,12 +625,12 @@ const Login = () => {
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: '#667eea',
+                    color: '#60a5fa',
                     fontSize: '0.9rem',
                     cursor: 'pointer',
                     textDecoration: 'underline'
                   }}
-                  onClick={() => alert('Forgot password feature coming soon!')}
+                  onClick={handleForgotPassword}
                 >
                   Forgot password?
                 </button>
@@ -607,7 +641,7 @@ const Login = () => {
               type="submit"
               disabled={loading}
               style={{
-                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                background: '#3b82f6',
                 color: 'white',
                 padding: '1rem',
                 borderRadius: '12px',
@@ -637,17 +671,62 @@ const Login = () => {
             </button>
           </form>
 
+          {/* Google Sign-In */}
+          <div style={{
+            marginTop: '1.5rem',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '1rem'
+            }}>
+              <div style={{ flex: 1, height: '1px', background: '#475569' }}></div>
+              <span style={{ padding: '0 1rem', color: '#94a3b8', fontSize: '0.9rem' }}>Or continue with</span>
+              <div style={{ flex: 1, height: '1px', background: '#475569' }}></div>
+            </div>
+            <button
+              type="button"
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                background: 'white',
+                border: '2px solid #475569',
+                borderRadius: '12px',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.background = '#f9fafb'}
+              onMouseOut={(e) => e.target.style.background = 'white'}
+              onClick={handleGoogleSignIn}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              Sign in with Google
+            </button>
+          </div>
+
           {/* Footer Info */}
           <div style={{
             marginTop: '2rem',
             padding: '1.5rem',
-            background: '#f9fafb',
+            background: '#334155',
             borderRadius: '12px',
             textAlign: 'center'
           }}>
             <div style={{ marginBottom: '1rem' }}>
               <span style={{ color: '#10b981', fontSize: '0.9rem', fontWeight: '600' }}>
-                <i className="fas fa-check-circle"></i> Deposits: KES, NGN, BTC, ETH
+                <i className="fas fa-check-circle"></i> Deposits: KES, NGN, BTC, ETH, USDT
               </span>
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -656,7 +735,7 @@ const Login = () => {
               </span>
             </div>
             <div>
-              <span style={{ color: '#8b5cf6', fontSize: '0.9rem', fontWeight: '600' }}>
+              <span style={{ color: '#60a5fa', fontSize: '0.9rem', fontWeight: '600' }}>
                 <i className="fas fa-shield-alt"></i> Bank-grade security
               </span>
             </div>
