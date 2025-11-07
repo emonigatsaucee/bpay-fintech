@@ -32,19 +32,45 @@ const Login = () => {
   const handleGoogleAuth = async () => {
     setLoading(true);
     try {
-      // Simulate Google OAuth flow
-      toast.loading('Connecting to Google...', { duration: 2000 });
-      
-      setTimeout(() => {
-        toast.dismiss();
-        toast.error('Google OAuth requires setup. Please use email login for now.', {
-          duration: 4000,
-          icon: '🔧'
+      // Real Google OAuth implementation
+      if (typeof window !== 'undefined' && window.google) {
+        const client = window.google.accounts.oauth2.initTokenClient({
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || 'demo-client-id',
+          scope: 'email profile',
+          callback: async (response) => {
+            if (response.access_token) {
+              try {
+                const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '';
+                const authResponse = await fetch(`${baseUrl}/api/auth/google/`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ access_token: response.access_token }),
+                });
+                
+                const data = await authResponse.json();
+                
+                if (authResponse.ok) {
+                  localStorage.setItem('token', data.access);
+                  toast.success(`Welcome ${data.user.name}!`);
+                  navigate('/');
+                  window.location.reload();
+                } else {
+                  toast.error(data.error || 'Google authentication failed');
+                }
+              } catch (error) {
+                toast.error('Network error during authentication');
+              }
+            }
+            setLoading(false);
+          },
         });
+        client.requestAccessToken();
+      } else {
+        toast.error('Google OAuth not available. Please use email login.', { icon: '🔧' });
         setLoading(false);
-      }, 2000);
+      }
     } catch (error) {
-      toast.error('Google authentication failed');
+      toast.error('Authentication failed');
       setLoading(false);
     }
   };
@@ -88,9 +114,23 @@ const Login = () => {
       const data = await response.json();
       
       if (response.ok) {
-        toast.success(mode === 'register' ? 'Verification code sent to your email' : 
-                     mode === 'forgot' ? 'Reset code sent to your email' : 
-                     'Verification code sent to your email');
+        // Show the actual code from response
+        const message = data.message || 'Code sent to your email';
+        toast.success(message, { duration: 6000 });
+        
+        // If debug code is provided, show it prominently
+        if (data.debug_code) {
+          toast.success(`Your verification code: ${data.debug_code}`, {
+            duration: 10000,
+            icon: '🔑',
+            style: {
+              background: '#1f2937',
+              color: '#fff',
+              border: '1px solid #3b82f6'
+            }
+          });
+        }
+        
         setStep(2);
         startResendCooldown();
       } else {
@@ -196,104 +236,114 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center px-4">
-      {/* Animated Crypto Background */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 relative overflow-hidden">
+      {/* Neural Network Background */}
       <div className="absolute inset-0">
-        {/* Matrix Rain Effect */}
-        <div className="absolute inset-0 opacity-10">
-          {[...Array(50)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute text-green-400 text-xs font-mono animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
-              }}
-            >
-              {['₿', '₿', 'Ξ', '₮', '$', '€', '¥'][Math.floor(Math.random() * 7)]}
-            </div>
+        <svg className="w-full h-full opacity-10" viewBox="0 0 1000 1000">
+          {[...Array(20)].map((_, i) => (
+            <g key={i}>
+              <circle 
+                cx={Math.random() * 1000} 
+                cy={Math.random() * 1000} 
+                r="2" 
+                fill="#3b82f6" 
+                className="animate-pulse"
+                style={{animationDelay: `${Math.random() * 3}s`}}
+              />
+              <line 
+                x1={Math.random() * 1000} 
+                y1={Math.random() * 1000} 
+                x2={Math.random() * 1000} 
+                y2={Math.random() * 1000} 
+                stroke="#3b82f6" 
+                strokeWidth="0.5" 
+                opacity="0.3"
+                className="animate-pulse"
+                style={{animationDelay: `${Math.random() * 2}s`}}
+              />
+            </g>
           ))}
-        </div>
-        
-        {/* Floating Crypto Icons */}
-        <div className="absolute inset-0">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-bounce opacity-20"
-              style={{
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${4 + Math.random() * 2}s`
-              }}
-            >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-black font-bold text-xs">
-                {['₿', 'Ξ', '₮', '$'][Math.floor(Math.random() * 4)]}
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Glowing Orbs */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-10 w-24 h-24 bg-green-500/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </svg>
       </div>
-      {/* Futuristic Auth Card */}
-      <div className="max-w-md w-full relative z-10">
-        {/* Glowing Border Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-sm opacity-75 animate-pulse"></div>
-        <div className="relative bg-black/90 backdrop-blur-xl rounded-3xl border border-gray-800 p-8 shadow-2xl">
-          
-          {/* Animated Logo */}
-          <div className="text-center mb-8">
-            <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full animate-spin" style={{animationDuration: '3s'}}></div>
-              <div className="absolute inset-1 bg-black rounded-full flex items-center justify-center">
-                <img 
-                  src="/static/bpay-logo.jpg/5782897843587714011_120.jpg" 
-                  alt="BPAY" 
-                  className="w-16 h-16 object-contain rounded-full"
-                  onError={(e) => {
-                    e.target.outerHTML = '<div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center"><span class="text-white font-bold text-xl">₿P</span></div>';
-                  }}
-                />
+      
+      {/* Floating Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-20 h-20 border border-blue-500/20 rounded-full animate-spin"
+            style={{
+              left: `${20 + Math.random() * 60}%`,
+              top: `${20 + Math.random() * 60}%`,
+              animationDuration: `${10 + Math.random() * 20}s`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          >
+            <div className="w-full h-full border border-purple-500/20 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+          </div>
+        ))}
+      </div>
+      
+      <div className="flex min-h-screen">
+        {/* Left Side - Info Panel */}
+        <div className="hidden lg:flex lg:w-1/2 flex-col justify-center p-12 relative">
+          <div className="max-w-lg">
+            <div className="mb-8">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 animate-pulse">
+                <span className="text-white font-bold text-2xl">₿P</span>
               </div>
-            </div>
-            
-            <div className="mb-4">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2 animate-pulse">
-                {mode === 'register' ? '🚀 Join BPAY' : mode === 'forgot' ? '🔐 Reset Access' : '⚡ Welcome Back'}
+              <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
+                The Future of
+                <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  Digital Payments
+                </span>
               </h1>
-              <p className="text-gray-400 text-sm">
-                {mode === 'register' ? 'Enter the future of crypto payments' : 
-                 mode === 'forgot' ? 'Recover your crypto wallet access' : 
-                 'Access your crypto universe'}
+              <p className="text-gray-400 text-lg mb-8">
+                Secure, fast, and borderless transactions powered by blockchain technology.
               </p>
             </div>
             
-            {/* Live Crypto Ticker */}
-            <div className="flex justify-center space-x-4 text-xs mb-6">
-              <div className="flex items-center space-x-1 text-green-400 animate-pulse">
-                <span>₿</span>
-                <span>$67,234</span>
-                <span className="text-green-300">↗</span>
-              </div>
-              <div className="flex items-center space-x-1 text-blue-400 animate-pulse" style={{animationDelay: '0.5s'}}>
-                <span>Ξ</span>
-                <span>$3,456</span>
-                <span className="text-green-300">↗</span>
-              </div>
-              <div className="flex items-center space-x-1 text-yellow-400 animate-pulse" style={{animationDelay: '1s'}}>
-                <span>₮</span>
-                <span>$1.00</span>
-                <span className="text-gray-400">→</span>
-              </div>
+            {/* Features */}
+            <div className="space-y-4">
+              {[
+                { icon: '⚡', title: 'Instant Transfers', desc: 'Send money globally in seconds' },
+                { icon: '🔒', title: 'Bank-Level Security', desc: 'Military-grade encryption' },
+                { icon: '🌍', title: 'Global Access', desc: 'Available in 50+ countries' }
+              ].map((feature, i) => (
+                <div key={i} className="flex items-center space-x-4 p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                  <div className="text-2xl">{feature.icon}</div>
+                  <div>
+                    <h3 className="text-white font-semibold">{feature.title}</h3>
+                    <p className="text-gray-400 text-sm">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+        
+        {/* Right Side - Auth Form */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+          <div className="w-full max-w-md">
+            {/* Holographic Card Effect */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+              <div className="relative bg-black/80 backdrop-blur-2xl rounded-2xl border border-white/20 p-8 shadow-2xl">
+                
+                {/* Header */}
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mb-4 animate-bounce">
+                    <span className="text-white font-bold text-xl">₿P</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    {mode === 'register' ? 'Create Account' : mode === 'forgot' ? 'Reset Password' : 'Welcome Back'}
+                  </h2>
+                  <p className="text-gray-400">
+                    {mode === 'register' ? 'Join the crypto revolution' : 
+                     mode === 'forgot' ? 'Recover your account' : 
+                     'Sign in to continue'}
+                  </p>
+                </div>
         
         {step === 1 ? (
         <form className="space-y-4" onSubmit={handleCredentialsSubmit}>
@@ -565,6 +615,9 @@ const Login = () => {
           </form>
         </div>
         )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

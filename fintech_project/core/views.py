@@ -11,6 +11,7 @@ from .luna_service import LunaWalletService
 from .kyc_service import KYCVerificationService
 from .models import UserProfile, PaymentMethod
 from .google_auth import GoogleAuthService
+from .alternative_email import AlternativeEmailService
 
 class WalletListCreateView(generics.ListCreateAPIView):
     serializer_class = WalletSerializer
@@ -183,14 +184,26 @@ def request_login_code(request):
             EmailService.store_code(email, code)
             print(f"Login code for {email}: {code}")
             
-            # Always show debug code since email might not work on Render
+            # Try multiple email methods
             email_sent = EmailService.send_verification_code(email, code)
+            
+            # Generate magic link as alternative
+            magic_result = AlternativeEmailService.generate_magic_link(email, code)
+            
             print(f"Login code for {email}: {code}")
             
-            return Response({
-                'message': f'Code sent! Check email or use: {code}',
-                'debug_code': code
-            })
+            response_data = {
+                'message': f'Verification code: {code}',
+                'debug_code': code,
+                'email_sent': email_sent
+            }
+            
+            # Add magic link if generated successfully
+            if magic_result.get('success'):
+                response_data['magic_link'] = magic_result['magic_link']
+                response_data['message'] += f' | Magic link available'
+            
+            return Response(response_data)
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
     except User.DoesNotExist:
@@ -251,14 +264,26 @@ def register_user(request):
         })
         print("Registration data stored")
         
-        # Always show debug code since email might not work on Render
+        # Try multiple email methods
         email_sent = EmailService.send_registration_code(email, code)
+        
+        # Generate magic link as alternative
+        magic_result = AlternativeEmailService.generate_magic_link(email, code)
+        
         print(f"Registration code for {email}: {code}")
         
-        return Response({
-            'message': f'Code sent! Check email or use: {code}',
-            'debug_code': code
-        })
+        response_data = {
+            'message': f'Verification code: {code}',
+            'debug_code': code,
+            'email_sent': email_sent
+        }
+        
+        # Add magic link if generated successfully
+        if magic_result.get('success'):
+            response_data['magic_link'] = magic_result['magic_link']
+            response_data['message'] += f' | Magic link: {magic_result["magic_link"][:50]}...'
+        
+        return Response(response_data)
             
     except Exception as e:
         print(f"Registration error: {e}")
@@ -797,6 +822,46 @@ def google_auth(request):
         import traceback
         traceback.print_exc()
         return Response({'error': 'Google authentication failed'}, status=500)
+
+@api_view(['POST'])
+@permission_classes([])
+def magic_login(request):
+    """Handle magic link login"""
+    try:
+        token = request.data.get('token')
+        email_b64 = request.data.get('email')
+        code = request.data.get('code')
+        
+        if not all([token, email_b64, code]):
+            return Response({'error': 'Missing parameters'}, status=400)
+        
+        from django.utils.http import urlsafe_base64_decode
+        from django.utils.encoding import force_str
+        import hashlib
+        
+        try:
+            email = force_str(urlsafe_base64_decode(email_b64))
+        except:
+            return Response({'error': 'Invalid email'}, status=400)
+        
+        expected_token = hashlib.sha256(f"{email}:{code}:{settings.SECRET_KEY}".encode()).hexdigest()[:32]
+        
+        if token != expected_token or not EmailService.verify_code(email, code):
+            return Response({'error': 'Invalid or expired link'}, status=400)
+        
+        user = User.objects.get(email=email)
+        from rest_framework_simplejwt.tokens import RefreshToken
+        refresh = RefreshToken.for_user(user)
+        
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        })
+        
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=400)
+    except Exception as e:
+        return Response({'error': 'Login failed'}, status=500)
 
 @api_view(['GET'])
 @permission_classes([])
