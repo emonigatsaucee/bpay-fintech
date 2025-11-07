@@ -286,7 +286,7 @@ const Login = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {/* Deposit Section */}
-            <div className="bg-green-50 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+            <div className="bg-green-900 bg-opacity-30 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300 border border-green-800">
               <div className="flex items-center mb-3">
                 <i className="bi bi-arrow-down-circle text-green-400 text-xl mr-2 animate-pulse"></i>
                 <h4 className="font-medium text-green-300">Deposits Accepted</h4>
@@ -312,7 +312,7 @@ const Login = () => {
             </div>
 
             {/* Withdrawal Section */}
-            <div className="bg-blue-50 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+            <div className="bg-blue-900 bg-opacity-30 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300 border border-blue-800">
               <div className="flex items-center mb-3">
                 <i className="bi bi-arrow-up-circle text-blue-400 text-xl mr-2 animate-pulse"></i>
                 <h4 className="font-medium text-blue-300">Withdrawals Available</h4>
@@ -338,8 +338,8 @@ const Login = () => {
             <h4 className="font-medium text-white mb-3 text-center">Integrated Payment Gateways</h4>
             <div className="flex justify-center space-x-6">
               <div className="text-center transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 cursor-pointer">
-                <div className="bg-orange-100 rounded-lg p-3 mb-2 shadow-md hover:shadow-lg transition-shadow">
-                  <i className="bi bi-credit-card text-orange-600 text-2xl animate-pulse"></i>
+                <div className="bg-orange-900 bg-opacity-50 rounded-lg p-3 mb-2 shadow-md hover:shadow-lg transition-shadow">
+                  <i className="bi bi-credit-card text-orange-400 text-2xl animate-pulse"></i>
                 </div>
                 <span className="text-xs text-slate-400">Flutterwave</span>
                 <div className="text-xs text-orange-400 font-medium">NGN</div>
