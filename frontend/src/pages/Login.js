@@ -85,31 +85,38 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-indigo-600 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-white bg-opacity-10 rounded-full animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}></div>
+        <div className="absolute top-32 right-20 w-16 h-16 bg-white bg-opacity-10 rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
+        <div className="absolute bottom-32 right-10 w-12 h-12 bg-white bg-opacity-10 rounded-full animate-bounce" style={{animationDelay: '0.5s', animationDuration: '3.5s'}}></div>
+      </div>
+      <div className="max-w-md w-full relative z-10">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <div className="bg-white rounded-full p-4 w-24 h-24 mx-auto mb-6 shadow-lg logo-container float-animation">
+          <div className="bg-white rounded-full p-4 w-24 h-24 mx-auto mb-6 shadow-lg transform hover:scale-105 transition-transform duration-300 animate-pulse">
             <img 
               src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
               alt="BPAY Logo" 
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-4xl font-bold mb-2 gradient-text">BPAY</h1>
+          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">BPAY</h1>
           <p className="text-gray-600 mb-4">
             {isLogin ? 'Welcome back to your wallet' : 'Create your multi-currency wallet'}
           </p>
           <div className="flex justify-center space-x-3 text-sm">
-            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium currency-badge">KES</span>
-            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium currency-badge">NGN</span>
-            <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium currency-badge">BTC</span>
-            <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium currency-badge">ETH</span>
+            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium transform hover:scale-110 transition-all duration-300 animate-bounce" style={{animationDelay: '0.1s'}}>KES</span>
+            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium transform hover:scale-110 transition-all duration-300 animate-bounce" style={{animationDelay: '0.2s'}}>NGN</span>
+            <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium transform hover:scale-110 transition-all duration-300 animate-bounce" style={{animationDelay: '0.3s'}}>BTC</span>
+            <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium transform hover:scale-110 transition-all duration-300 animate-bounce" style={{animationDelay: '0.4s'}}>ETH</span>
           </div>
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 transform hover:shadow-2xl transition-all duration-300">
           {/* Tab Switcher */}
           <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
             <button
@@ -224,7 +231,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
             >
               {loading ? (
                 <div className="flex items-center justify-center">
@@ -259,16 +266,16 @@ const Login = () => {
         </div>
 
         {/* System Features */}
-        <div className={`bg-white rounded-xl p-6 mt-6 border border-gray-200 transition-all duration-1000 transform ${
-          showFeatures ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        <div className={`bg-white rounded-xl p-6 mt-6 border border-gray-200 shadow-lg transition-all duration-1000 transform ${
+          showFeatures ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
         }`}>
           <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">BPAY Wallet Features</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {/* Deposit Section */}
-            <div className="bg-green-50 rounded-lg p-4 feature-card">
+            <div className="bg-green-50 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div className="flex items-center mb-3">
-                <i className="bi bi-arrow-down-circle text-green-600 text-xl mr-2 float-animation"></i>
+                <i className="bi bi-arrow-down-circle text-green-600 text-xl mr-2 animate-pulse"></i>
                 <h4 className="font-medium text-green-800">Deposits Accepted</h4>
               </div>
               <div className="space-y-2">
@@ -292,9 +299,9 @@ const Login = () => {
             </div>
 
             {/* Withdrawal Section */}
-            <div className="bg-blue-50 rounded-lg p-4 feature-card">
+            <div className="bg-blue-50 rounded-lg p-4 transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div className="flex items-center mb-3">
-                <i className="bi bi-arrow-up-circle text-blue-600 text-xl mr-2 float-animation"></i>
+                <i className="bi bi-arrow-up-circle text-blue-600 text-xl mr-2 animate-pulse"></i>
                 <h4 className="font-medium text-blue-800">Withdrawals Available</h4>
               </div>
               <div className="space-y-2">
@@ -317,23 +324,23 @@ const Login = () => {
           <div className="border-t pt-4">
             <h4 className="font-medium text-gray-800 mb-3 text-center">Integrated Payment Gateways</h4>
             <div className="flex justify-center space-x-6">
-              <div className="text-center payment-icon">
-                <div className="bg-orange-100 rounded-lg p-3 mb-2">
-                  <i className="bi bi-credit-card text-orange-600 text-2xl"></i>
+              <div className="text-center transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="bg-orange-100 rounded-lg p-3 mb-2 shadow-md hover:shadow-lg transition-shadow">
+                  <i className="bi bi-credit-card text-orange-600 text-2xl animate-pulse"></i>
                 </div>
                 <span className="text-xs text-gray-600">Flutterwave</span>
                 <div className="text-xs text-orange-600 font-medium">NGN</div>
               </div>
-              <div className="text-center payment-icon">
-                <div className="bg-green-100 rounded-lg p-3 mb-2">
-                  <i className="bi bi-phone text-green-600 text-2xl"></i>
+              <div className="text-center transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="bg-green-100 rounded-lg p-3 mb-2 shadow-md hover:shadow-lg transition-shadow">
+                  <i className="bi bi-phone text-green-600 text-2xl animate-pulse"></i>
                 </div>
                 <span className="text-xs text-gray-600">SasaPay</span>
                 <div className="text-xs text-green-600 font-medium">KES/M-Pesa</div>
               </div>
-              <div className="text-center payment-icon">
-                <div className="bg-yellow-100 rounded-lg p-3 mb-2">
-                  <i className="bi bi-shield-check text-yellow-600 text-2xl"></i>
+              <div className="text-center transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="bg-yellow-100 rounded-lg p-3 mb-2 shadow-md hover:shadow-lg transition-shadow">
+                  <i className="bi bi-shield-check text-yellow-600 text-2xl animate-pulse"></i>
                 </div>
                 <span className="text-xs text-gray-600">Crypto</span>
                 <div className="text-xs text-yellow-600 font-medium">BTC/ETH</div>
@@ -344,8 +351,8 @@ const Login = () => {
 
         {/* Security Badge */}
         <div className="text-center mt-4">
-          <div className="inline-flex items-center bg-gray-100 rounded-full px-4 py-2">
-            <i className="bi bi-shield-fill-check text-green-600 mr-2"></i>
+          <div className="inline-flex items-center bg-gray-100 rounded-full px-4 py-2 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
+            <i className="bi bi-shield-fill-check text-green-600 mr-2 animate-pulse"></i>
             <span className="text-sm text-gray-700 font-medium">KYC Compliant & Secure</span>
           </div>
         </div>
