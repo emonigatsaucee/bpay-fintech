@@ -11,6 +11,7 @@ urlpatterns = [
     path('rates/', views.get_exchange_rates, name='get-rates'),
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/login/', views.login_user, name='login'),
     path('auth/login-code/', views.request_login_code, name='login_code'),
     path('auth/verify-login/', views.verify_login_code, name='verify_login'),
     path('auth/register/', views.register_user, name='register'),

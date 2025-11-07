@@ -863,6 +863,32 @@ def magic_login(request):
     except Exception as e:
         return Response({'error': 'Login failed'}, status=500)
 
+@api_view(['POST'])
+@permission_classes([])
+def login_user(request):
+    """Simple login endpoint for frontend"""
+    email = request.data.get('email')
+    password = request.data.get('password')
+    
+    if not all([email, password]):
+        return Response({'error': 'Email and password required'}, status=400)
+    
+    try:
+        from django.contrib.auth import authenticate
+        user = authenticate(username=email, password=password)
+        
+        if user:
+            from rest_framework_simplejwt.tokens import RefreshToken
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            })
+        else:
+            return Response({'error': 'Invalid credentials'}, status=400)
+    except Exception as e:
+        return Response({'error': 'Login failed'}, status=500)
+
 @api_view(['GET'])
 @permission_classes([])
 def test_endpoint(request):
