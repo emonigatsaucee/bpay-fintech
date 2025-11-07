@@ -165,23 +165,21 @@ const Login = () => {
             <div style={{
               width: '60px',
               height: '60px',
-              background: '#3b82f6',
               borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               marginRight: '1rem',
               boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-              animation: 'pulse 2s infinite'
+              animation: 'pulse 2s infinite',
+              overflow: 'hidden'
             }}>
-              <span style={{
-                color: 'white',
-                fontSize: '1.8rem',
-                fontWeight: 'bold',
-                fontFamily: 'Arial, sans-serif'
-              }}>
-                B
-              </span>
+              <img 
+                src="/bpay-logo.jpg/5782897843587714011_120.jpg" 
+                alt="BPAY Logo" 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
             </div>
             <div>
               <h1 style={{
