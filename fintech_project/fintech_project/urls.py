@@ -18,4 +18,7 @@ if settings.DEBUG:
 else:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# API-only backend - no frontend serving
+# Serve React frontend
+urlpatterns += [
+    re_path(r'^(?!api/)(?!admin/)(?!static/)(?!media/).*$', TemplateView.as_view(template_name='index.html'), name='react_app'),
+]
